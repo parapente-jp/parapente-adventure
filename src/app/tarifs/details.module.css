@@ -1,0 +1,251 @@
+/* Styles for Detail Pages (Summer/Winter) */
+.page {
+    background: var(--color-background);
+}
+
+.hero {
+    position: relative;
+    height: 50vh;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.heroBackground {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.heroImage {
+    object-fit: cover;
+}
+
+.heroOverlay {
+    position: absolute;
+    inset: 0;
+    /* Fades out sooner to blend with the white transition */
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0.2) 60%, transparent 100%);
+    z-index: 1;
+}
+
+.winterHeroOverlay {
+    background: linear-gradient(to bottom, rgba(56, 189, 248, 0.2), rgba(15, 23, 42, 0.7));
+}
+
+.gradientOverlay {
+    position: absolute;
+    bottom: -2px;
+    /* Slight overlap to ensure no gap */
+    left: 0;
+    right: 0;
+    height: 100%;
+    /* Extra-soft airy transition with 8 stops starting much higher */
+    background: linear-gradient(to bottom,
+            transparent 0%,
+            rgba(250, 250, 250, 0) 20%,
+            rgba(250, 250, 250, 0.02) 35%,
+            rgba(250, 250, 250, 0.1) 50%,
+            rgba(250, 250, 250, 0.25) 65%,
+            rgba(250, 250, 250, 0.5) 80%,
+            rgba(250, 250, 250, 0.8) 92%,
+            var(--color-background) 100%);
+    z-index: 2;
+    pointer-events: none;
+}
+
+.heroContent {
+    position: relative;
+    z-index: 10;
+    text-align: center;
+    color: white;
+    padding: 0 var(--space-4);
+}
+
+.badge {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+    padding: var(--space-1) var(--space-4);
+    background: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--radius-full);
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    margin: 0 auto var(--space-4) auto;
+    width: fit-content;
+    color: white;
+}
+
+.badgeIcon {
+    width: 16px;
+    height: 16px;
+    stroke: white;
+}
+
+.title {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: var(--font-extrabold);
+    margin-bottom: var(--space-2);
+    color: white !important;
+    text-shadow: 0 4px 30px rgba(0, 0, 0, 0.6);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.subtitle {
+    font-size: var(--text-xl);
+    opacity: 0.95;
+    color: white;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+}
+
+.container {
+    max-width: var(--container-lg);
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+}
+
+.intro {
+    padding: var(--space-20) 0;
+}
+
+.introContent {
+    max-width: 800px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.introContent h2 {
+    margin-bottom: var(--space-6);
+}
+
+.introGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: var(--space-8);
+    margin-top: var(--space-12);
+}
+
+.introItem {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-4);
+}
+
+.iconWrapper {
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    box-shadow: var(--shadow-md);
+    border-radius: 50%;
+    font-size: 1.5rem;
+    margin-bottom: var(--space-2);
+}
+
+.introItem strong {
+    display: block;
+    margin-bottom: var(--space-1);
+    color: var(--color-text);
+}
+
+.requirements {
+    padding: var(--space-20) 0;
+    background: var(--color-surface);
+}
+
+.requirementsGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-12);
+}
+
+.requirementCard h3 {
+    margin-bottom: var(--space-4);
+    color: var(--color-primary);
+}
+
+.requirementCard ul {
+    list-style: none;
+}
+
+.requirementCard li {
+    padding: var(--space-2) 0;
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.requirementCard li::before {
+    content: "•";
+    color: var(--color-primary);
+    font-weight: bold;
+}
+
+.skiInfo {
+    padding: var(--space-20) 0;
+}
+
+.skiInfoContent {
+    display: grid;
+    grid-template-columns: 1.2fr 0.8fr;
+    gap: var(--space-12);
+    align-items: center;
+}
+
+.skiInfoText h2 {
+    margin-bottom: var(--space-6);
+}
+
+.skiInfoText p {
+    margin-bottom: var(--space-4);
+}
+
+.roundedImage {
+    border-radius: var(--radius-2xl);
+    box-shadow: var(--shadow-xl);
+}
+
+.ctaSection {
+    padding: var(--space-32) 0;
+    background: var(--gradient-hero);
+    color: white;
+    text-align: center;
+}
+
+.ctaContent h2 {
+    color: white;
+    font-size: var(--text-4xl);
+    margin-bottom: var(--space-2);
+}
+
+.ctaButtons {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-6);
+    margin-top: var(--space-10);
+}
+
+@media (max-width: 768px) {
+
+    .requirementsGrid,
+    .skiInfoContent {
+        grid-template-columns: 1fr;
+    }
+
+    .ctaButtons {
+        flex-direction: column;
+        align-items: center;
+    }
+}

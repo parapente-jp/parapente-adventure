@@ -1,0 +1,356 @@
+.footer {
+    position: relative;
+    background: #1A1A1A;
+    margin-top: 0;
+    overflow: hidden;
+    color: var(--color-white);
+}
+
+/* CTA Banner */
+.ctaBanner {
+    background: var(--color-primary);
+    padding: var(--space-12) 0;
+    text-align: center;
+}
+
+.ctaContainer {
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+}
+
+.ctaTitle {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--color-white);
+    margin-bottom: var(--space-1);
+    text-transform: uppercase;
+    letter-spacing: -0.5px;
+    font-weight: 800;
+}
+
+.ctaSubtitle {
+    font-size: var(--text-lg);
+    color: var(--color-white);
+    margin-bottom: var(--space-10);
+    opacity: 0.9;
+}
+
+.ctaButtons {
+    display: flex;
+    justify-content: center;
+    gap: var(--space-4);
+}
+
+.ctaBtnPrimary {
+    background: var(--color-white);
+    color: var(--color-primary);
+    padding: var(--space-4) var(--space-10);
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-bold);
+    text-decoration: none;
+    transition: all var(--transition-base);
+}
+
+.ctaBtnPrimary:hover {
+    transform: scale(1.02);
+    background: #ffffff;
+}
+
+.ctaBtnOutline {
+    background: transparent;
+    color: var(--color-white);
+    border: 2px solid var(--color-white);
+    padding: var(--space-4) var(--space-10);
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-bold);
+    text-decoration: none;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.btnIconSvg {
+    width: 20px;
+    height: 20px;
+    stroke: var(--color-white);
+}
+
+.ctaBtnOutline .btnIconSvg {
+    stroke: #000000;
+}
+
+.ctaBtnOutline:hover {
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* Main Footer */
+.mainFooter {
+    padding: var(--space-20) 0 var(--space-10);
+}
+
+.container {
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.2fr;
+    gap: var(--space-12);
+}
+
+/* Brand Column */
+.brandColumn {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    text-decoration: none;
+}
+
+.footerLogoImg {
+    height: 80px;
+    width: auto;
+    display: block;
+    filter: brightness(0) invert(1);
+    margin-bottom: var(--space-2);
+}
+
+.description {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.5);
+    line-height: 1.6;
+    margin: 0;
+}
+
+.languages {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    font-size: 13px;
+    color: rgba(255, 255, 255, 0.4);
+}
+
+.langItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-2);
+}
+
+/* Columns */
+.column {
+    display: flex;
+    flex-direction: column;
+}
+
+.columnTitle {
+    font-family: var(--font-primary);
+    font-size: 15px;
+    font-weight: 800;
+    color: var(--color-white);
+    margin-bottom: var(--space-10);
+    letter-spacing: 1px;
+}
+
+.navList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+}
+
+.navLink {
+    font-size: 14px;
+    color: var(--color-white);
+    /* Links are white in the image */
+    text-decoration: none;
+    transition: opacity var(--transition-fast);
+}
+
+.navLink:hover {
+    opacity: 0.7;
+}
+
+/* Contact Column */
+.contactList {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-5);
+    margin-bottom: var(--space-10);
+}
+
+.contactItem {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.contactItem:hover {
+    color: var(--color-white);
+}
+
+.contactIconSvg {
+    width: 18px;
+    height: 18px;
+    stroke: rgba(255, 255, 255, 0.3);
+}
+
+.bookBtn {
+    background: var(--color-primary);
+    color: var(--color-white);
+    padding: var(--space-4) var(--space-8);
+    border-radius: var(--radius-lg);
+    font-weight: var(--font-bold);
+    text-align: center;
+    text-decoration: none;
+    transition: all var(--transition-base);
+    width: 100%;
+}
+
+.bookBtn:hover {
+    transform: translateY(-2px);
+    background: var(--color-primary-dark);
+}
+
+/* Bottom Bar */
+.bottomBar {
+    margin-top: var(--space-12);
+}
+
+.bottomDivider {
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+    margin-bottom: var(--space-6);
+}
+
+.bottomContent {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.copyright {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.4);
+    margin: 0;
+}
+
+.legalLinks {
+    display: flex;
+    gap: var(--space-8);
+}
+
+.legalLink {
+    font-size: var(--text-sm);
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+    transition: color var(--transition-fast);
+}
+
+.legalLink:hover {
+    color: var(--color-white);
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .grid {
+        grid-template-columns: 1.5fr 1fr;
+        gap: var(--space-8);
+    }
+
+    .brandColumn {
+        grid-column: span 2;
+    }
+}
+
+@media (max-width: 768px) {
+    .ctaBanner {
+        padding: var(--space-16) 0;
+    }
+
+    .ctaButtons {
+        flex-direction: column;
+        align-items: stretch;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    .mainFooter {
+        padding: var(--space-12) 0;
+    }
+
+    .grid {
+        grid-template-columns: 1fr;
+        gap: var(--space-12);
+        text-align: center;
+    }
+
+    .brandColumn {
+        grid-column: span 1;
+        align-items: center;
+    }
+
+    .footerLogoImg {
+        height: 70px;
+        margin: 0 auto var(--space-4);
+    }
+
+    .description {
+        max-width: 400px;
+        margin: 0 auto;
+    }
+
+    .languages {
+        align-items: center;
+    }
+
+    .columnTitle {
+        margin-bottom: var(--space-6);
+    }
+
+    .navList {
+        align-items: center;
+    }
+
+    .contactList {
+        align-items: center;
+        gap: var(--space-4);
+        margin-bottom: var(--space-8);
+    }
+
+    .contactItem {
+        justify-content: center;
+    }
+
+    .bookBtn {
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+    .bottomBar {
+        margin-top: var(--space-16);
+    }
+
+    .bottomContent {
+        flex-direction: column;
+        gap: var(--space-6);
+        text-align: center;
+    }
+
+    .legalLinks {
+        flex-direction: column;
+        gap: var(--space-4);
+        align-items: center;
+    }
+}

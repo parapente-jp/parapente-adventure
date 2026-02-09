@@ -1,0 +1,150 @@
+.page {
+    /* Hero extends behind navbar */
+}
+
+/* Hero */
+.hero {
+    position: relative;
+    background: url('/blog-hero.png') center center / cover no-repeat;
+    padding: var(--space-32) var(--space-6) var(--space-16);
+    text-align: center;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.3) 0%, rgba(0, 0, 0, 0.4) 60%, rgba(250, 250, 250, 1) 100%);
+}
+
+.heroContent {
+    position: relative;
+    z-index: 1;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4rem);
+    color: var(--color-white);
+    margin-bottom: var(--space-4);
+    letter-spacing: 0.02em;
+}
+
+.subtitle {
+    font-size: var(--text-lg);
+    color: rgba(255, 255, 255, 0.8);
+    margin: 0;
+}
+
+/* Options Section */
+.options {
+    padding: var(--space-20) 0;
+    background: var(--color-background);
+}
+
+.container {
+    max-width: var(--container-lg);
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+}
+
+.sectionTitle {
+    font-family: var(--font-display);
+    font-size: var(--text-3xl);
+    text-align: center;
+    margin-bottom: var(--space-2);
+    letter-spacing: 0.02em;
+}
+
+.sectionSubtitle {
+    text-align: center;
+    color: var(--color-text-light);
+    margin-bottom: var(--space-12);
+}
+
+/* Options Grid */
+.optionsGrid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: var(--space-6);
+    margin-bottom: var(--space-12);
+}
+
+.optionCard {
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    padding: var(--space-8);
+    text-align: center;
+    text-decoration: none;
+    box-shadow: var(--shadow-md);
+    transition: all var(--transition-base);
+    border: 2px solid transparent;
+}
+
+.optionCard:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-xl);
+    border-color: var(--color-primary);
+}
+
+.optionIcon {
+    font-size: 48px;
+    margin-bottom: var(--space-4);
+}
+
+.optionCard h3 {
+    font-size: var(--text-xl);
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+}
+
+.optionCard p {
+    font-size: var(--text-sm);
+    color: var(--color-text-light);
+    margin-bottom: var(--space-4);
+}
+
+.optionBtn {
+    font-size: var(--text-sm);
+    font-weight: var(--font-semibold);
+    color: var(--color-primary);
+}
+
+/* CTA */
+.cta {
+    text-align: center;
+    padding: var(--space-8);
+    background: var(--color-white);
+    border-radius: var(--radius-xl);
+    margin-bottom: var(--space-8);
+}
+
+.cta p {
+    margin-bottom: var(--space-2);
+    color: var(--color-text-light);
+}
+
+.phone {
+    font-size: var(--text-xl);
+    font-weight: var(--font-bold);
+    color: var(--color-primary);
+    text-decoration: none;
+}
+
+/* Back Link */
+.backLink {
+    text-align: center;
+}
+
+.backLink a {
+    color: var(--color-text-light);
+    text-decoration: none;
+    font-size: var(--text-sm);
+    transition: color var(--transition-fast);
+}
+
+.backLink a:hover {
+    color: var(--color-primary);
+}

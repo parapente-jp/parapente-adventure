@@ -1,0 +1,265 @@
+.adminPage {
+    padding: var(--space-12) 0;
+    min-height: 100vh;
+    background: #f8fafc;
+}
+
+.title {
+    font-size: var(--text-2xl);
+    font-weight: var(--font-extrabold);
+    margin-bottom: var(--space-8);
+    text-align: center;
+    color: #1a202c;
+}
+
+.calendarContainer {
+    max-width: 900px;
+    margin: 0 auto;
+    background: white;
+    padding: var(--space-6) var(--space-8);
+    border-radius: var(--radius-2xl);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    border: 1px solid #edf2f7;
+}
+
+.calendarControls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: var(--space-8);
+    margin-bottom: var(--space-2);
+}
+
+.monthTitle {
+    font-size: var(--text-lg);
+    font-weight: var(--font-bold);
+    color: #334155;
+    text-transform: capitalize;
+    min-width: 140px;
+    text-align: center;
+}
+
+.navBtn {
+    background: #f1f5f9;
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #64748b;
+    transition: all 0.2s;
+}
+
+.navBtn:hover {
+    background: #e2e8f0;
+    color: var(--color-primary);
+}
+
+.seasonBanner {
+    background: #f0fdfa;
+    color: #0d9488;
+    font-size: 10px;
+    font-weight: var(--font-bold);
+    text-transform: uppercase;
+    text-align: center;
+    padding: 2px 0;
+    margin-bottom: var(--space-6);
+    border-radius: var(--radius-sm);
+    letter-spacing: 0.15em;
+}
+
+.calendarGrid {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    gap: var(--space-1);
+}
+
+.weekday {
+    text-align: center;
+    font-size: 11px;
+    font-weight: var(--font-bold);
+    color: #94a3b8;
+    padding-bottom: var(--space-1);
+}
+
+.dayCell {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 48px;
+    position: relative;
+    cursor: pointer;
+}
+
+.dayBadge {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
+    font-weight: var(--font-bold);
+    transition: all 0.2s;
+}
+
+.available {
+    background: #f0fdfa;
+    color: #0d9488;
+    border: 1px solid #ccfbf1;
+}
+
+.closedDay {
+    background: #fff1f2;
+    color: #e11d48;
+}
+
+.today {
+    background: #ffedd5;
+    color: #ea580c;
+    border: 1px solid #fed7aa;
+}
+
+.empty {
+    visibility: hidden;
+    cursor: default;
+}
+
+.statusIcon {
+    font-size: 10px;
+    line-height: 1;
+}
+
+.statusMessage {
+    margin-top: var(--space-6);
+    text-align: center;
+    padding: var(--space-2);
+    background: #f0fdf4;
+    color: #166534;
+    border-radius: var(--radius-lg);
+    font-size: 12px;
+}
+
+/* Modal Styling */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(15, 23, 42, 0.4);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+}
+
+.selectionBox {
+    background: white;
+    padding: var(--space-8);
+    border-radius: var(--radius-2xl);
+    width: 100%;
+    max-width: 400px;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+}
+
+.reasonGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    margin: var(--space-6) 0;
+}
+
+.reasonButton {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: var(--space-4);
+    border: 2px solid #f1f5f9;
+    border-radius: var(--radius-xl);
+    background: white;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.reasonButton:hover {
+    border-color: var(--color-primary);
+    background: #fff7ed;
+}
+
+.reasonActive {
+    border-color: var(--color-primary);
+    background: var(--color-primary);
+    color: white;
+}
+
+.actionButtons {
+    display: flex;
+    gap: var(--space-3);
+    margin-top: var(--space-6);
+}
+
+.btnSave,
+.btnCancel {
+    flex: 1;
+    padding: var(--space-3);
+    border-radius: var(--radius-lg);
+    border: none;
+    font-weight: var(--font-bold);
+    cursor: pointer;
+}
+
+.btnSave {
+    background: #ef4444;
+    color: white;
+}
+
+.btnCancel {
+    background: #f1f5f9;
+    color: #64748b;
+}
+
+.loading {
+    display: flex;
+    justify-content: center;
+    padding: var(--space-20);
+}
+
+.loadingSpinner {
+    width: 32px;
+    height: 32px;
+    border: 3px solid #f1f5f9;
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+@media (max-width: 640px) {
+    .calendarContainer {
+        padding: var(--space-4);
+    }
+
+    .dayBadge {
+        width: 32px;
+        height: 32px;
+        font-size: 12px;
+    }
+}
+
+.accessDenied {
+    text-align: center;
+    padding: 100px 20px;
+    color: #64748b;
+}
