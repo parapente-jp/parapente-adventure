@@ -19,6 +19,8 @@ export default function AdminPlanningPage() {
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
 
+    const [pushing, setPushing] = useState(false);
+
     useEffect(() => {
         if (isAuthenticated) {
             fetchClosures();
@@ -45,11 +47,34 @@ export default function AdminPlanningPage() {
                 body: JSON.stringify(newClosures),
             });
             if (res.ok) {
-                setMessage('✅ Enregistré');
+                setMessage('✅ Enregistré (local)');
                 setTimeout(() => setMessage(''), 2000);
             }
         } catch {
-            setMessage('❌ Erreur');
+            setMessage('❌ Erreur local');
+        }
+    };
+
+    const handlePush = async () => {
+        setPushing(true);
+        setMessage('⏳ Propagation en cours...');
+        try {
+            const res = await fetch('/api/admin/push', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ closures }),
+            });
+            const data = await res.json();
+            if (res.ok) {
+                setMessage('🚀 Déploiement lancé !');
+            } else {
+                setMessage(`❌ Erreur: ${data.error}`);
+            }
+        } catch {
+            setMessage('❌ Erreur de connexion');
+        } finally {
+            setPushing(false);
+            setTimeout(() => setMessage(''), 5000);
         }
     };
 
@@ -118,7 +143,16 @@ export default function AdminPlanningPage() {
     return (
         <div className={styles.adminPage}>
             <div className="container">
-                <h1 className={styles.title}>📅 Gestion Planning</h1>
+                <div className={styles.headerRow}>
+                    <h1 className={styles.title}>📅 Gestion Planning</h1>
+                    <button
+                        className={styles.pushBtn}
+                        onClick={handlePush}
+                        disabled={pushing}
+                    >
+                        {pushing ? '⏳ Envoi...' : '🚀 Propager sur le site'}
+                    </button>
+                </div>
 
                 <div className={styles.calendarContainer}>
                     <div className={styles.calendarControls}>
