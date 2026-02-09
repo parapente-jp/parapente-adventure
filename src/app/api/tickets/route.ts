@@ -2,13 +2,18 @@ import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { createTicket, getTicketBySession, getAllTickets } from '@/lib/ticketStore';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: '2026-01-28.clover',
-});
+const stripe = process.env.STRIPE_SECRET_KEY
+    ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+        apiVersion: '2026-01-28.clover' as any,
+    })
+    : null;
 
 // POST - Create a new ticket
 export async function POST(request: NextRequest) {
     try {
+        if (!stripe) {
+            return NextResponse.json({ error: 'Stripe non configuré' }, { status: 500 });
+        }
         const body = await request.json();
 
         const { stripeSessionId } = body;

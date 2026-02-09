@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { formulesEte, formulesHiver } from '@/data/site-config';
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: '2026-01-28.clover',
-});
+const stripe = process.env.STRIPE_SECRET_KEY
+    ? new Stripe(process.env.STRIPE_SECRET_KEY, {
+        apiVersion: '2026-01-28.clover' as any,
+    })
+    : null;
 
 interface CheckoutRequest {
     formulaId: string;
@@ -19,6 +21,9 @@ interface CheckoutRequest {
 
 export async function POST(request: NextRequest) {
     try {
+        if (!stripe) {
+            return NextResponse.json({ error: 'Stripe non configuré' }, { status: 500 });
+        }
         const body: CheckoutRequest = await request.json();
         const { formulaId, options, customerName, customerEmail, customerPhone, date, weight, participants } = body;
 
