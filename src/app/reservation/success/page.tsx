@@ -43,16 +43,23 @@ function SuccessContent() {
 
                 if (response.ok) {
                     const data = await response.json();
-                    setTicket(data.ticket);
+                    if (data.ticket) {
+                        setTicket(data.ticket);
+                    } else {
+                        console.error('Ticket not found in response');
+                        setError('Billet non trouvé dans la base de données. Essayez de rafraîchir ou contactez Jean-Philippe.');
+                    }
                 } else {
                     const errorData = await response.json();
                     console.error('Ticket API error:', errorData.error);
+                    setError(`Erreur technique : ${errorData.error}`);
                 }
-            } catch (error) {
+            } catch (error: any) {
                 console.error('Error creating ticket:', error);
+                setError(`Erreur de connexion : ${error.message}`);
+            } finally {
+                setLoading(false); // Moved to finally block
             }
-
-            setIsLoading(false);
         }
 
         createOrGetTicket();
