@@ -170,15 +170,36 @@
 
     .timeline {
         grid-template-columns: 1fr;
-        gap: var(--space-8);
+        gap: var(--space-10);
+        position: relative;
+    }
+
+    /* Vertical Path Line */
+    .timeline::before {
+        display: block;
+        position: absolute;
+        width: 2px;
+        top: 30px;
+        /* Start from center of first icon */
+        bottom: 30px;
+        /* End at center of last icon */
+        left: 30px;
+        /* Center of 60px icon */
+        right: auto;
+        height: auto;
+        background: var(--color-primary);
+        opacity: 0.2;
+        z-index: 0;
     }
 
     .step {
         display: grid;
-        grid-template-columns: auto 1fr;
+        grid-template-columns: 60px 1fr;
         grid-template-rows: auto auto;
-        gap: 0 var(--space-4);
+        gap: 0 var(--space-6);
         text-align: left;
+        position: relative;
+        z-index: 1;
     }
 
     .stepIcon {
@@ -186,6 +207,10 @@
         width: 60px;
         height: 60px;
         margin: 0;
+        background: var(--color-white);
+        z-index: 2;
+        box-shadow: 0 0 0 10px var(--color-background);
+        /* Masks the line behind the icon */
     }
 
     .stepIcon svg {
@@ -199,11 +224,15 @@
 
     .stepTitle {
         align-self: end;
-        margin-bottom: 0;
+        margin-bottom: var(--space-1);
+        font-size: var(--text-lg);
     }
 
     .stepDescription {
         max-width: none;
         align-self: start;
+        margin: 0;
+        font-size: var(--text-base);
+        line-height: 1.4;
     }
 }
