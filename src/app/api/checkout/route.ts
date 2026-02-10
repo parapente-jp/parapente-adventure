@@ -4,7 +4,7 @@ import { formulesEte, formulesHiver } from '@/data/site-config';
 
 const stripe = process.env.STRIPE_SECRET_KEY
     ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-        apiVersion: '2026-01-28.clover' as any,
+        apiVersion: '2025-01-27.acacia' as any,
     })
     : null;
 
