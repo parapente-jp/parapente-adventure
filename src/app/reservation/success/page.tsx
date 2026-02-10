@@ -22,6 +22,7 @@ function SuccessContent() {
     const sessionId = searchParams.get('session_id');
     const [isLoading, setIsLoading] = useState(true);
     const [ticket, setTicket] = useState<TicketData | null>(null);
+    const [error, setError] = useState<string | null>(null);
     const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
 
     useEffect(() => {
@@ -58,7 +59,7 @@ function SuccessContent() {
                 console.error('Error creating ticket:', error);
                 setError(`Erreur de connexion : ${error.message}`);
             } finally {
-                setLoading(false); // Moved to finally block
+                setIsLoading(false);
             }
         }
 
@@ -93,6 +94,12 @@ function SuccessContent() {
             <p className={styles.intro}>
                 Merci pour votre achat. Votre paiement a bien été reçu.
             </p>
+
+            {error && (
+                <div className={styles.errorBanner}>
+                    <p>⚠️ {error}</p>
+                </div>
+            )}
 
             {/* Warning Box - IMPORTANT */}
             <div className={styles.warningBox}>
