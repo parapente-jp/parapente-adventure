@@ -25,6 +25,7 @@
     align-items: center;
     justify-content: space-between;
     gap: var(--space-10);
+    min-height: 80px;
 }
 
 /* Logo */
@@ -37,7 +38,7 @@
 }
 
 .logoImg {
-    height: 100px;
+    height: 90px;
     width: auto;
     display: block;
     transition: all var(--transition-base);
@@ -45,7 +46,7 @@
 }
 
 .header.scrolled .logoImg {
-    height: 70px;
+    height: 60px;
     filter: none;
 }
 
