@@ -14,9 +14,6 @@ export default function Home() {
       {/* Hero Section */}
       <Hero />
 
-      {/* Reassurance Section */}
-      <Reassurance />
-
       {/* How It Works */}
       <HowItWorks />
 
