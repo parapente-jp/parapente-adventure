@@ -4,6 +4,8 @@ import path from 'path';
 
 const DATA_FILE = path.join(process.cwd(), 'src/data/closures.json');
 
+export const dynamic = 'force-dynamic';
+
 export async function GET() {
     try {
         const data = await fs.readFile(DATA_FILE, 'utf8');
