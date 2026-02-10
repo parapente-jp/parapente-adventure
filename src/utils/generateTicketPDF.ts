@@ -31,24 +31,24 @@ export async function generateTicketPDF(ticket: TicketData): Promise<void> {
 
     // Header bar
     pdf.setFillColor(255, 102, 0);
-    pdf.rect(0, 0, pageWidth, 40, 'F');
+    pdf.rect(0, 0, pageWidth, 35, 'F');
 
     // Title
     pdf.setTextColor(255, 255, 255);
     pdf.setFontSize(24);
     pdf.setFont('helvetica', 'bold');
-    pdf.text('PARAPENTE ADVENTURE', pageWidth / 2, 18, { align: 'center' });
+    pdf.text('PARAPENTE ADVENTURE', pageWidth / 2, 15, { align: 'center' });
     pdf.setFontSize(14);
     pdf.setFont('helvetica', 'normal');
-    pdf.text('Bon Cadeau / Billet de Vol', pageWidth / 2, 30, { align: 'center' });
+    pdf.text('Bon Cadeau / Billet de Vol', pageWidth / 2, 25, { align: 'center' });
 
     // Ticket ID
     pdf.setFillColor(51, 51, 51);
-    pdf.roundedRect(pageWidth / 2 - 30, 45, 60, 12, 3, 3, 'F');
+    pdf.roundedRect(pageWidth / 2 - 30, 40, 60, 10, 3, 3, 'F');
     pdf.setTextColor(255, 255, 255);
     pdf.setFontSize(12);
     pdf.setFont('helvetica', 'bold');
-    pdf.text(ticket.id, pageWidth / 2, 53, { align: 'center' });
+    pdf.text(ticket.id, pageWidth / 2, 47, { align: 'center' });
 
     // Generate QR Code
     const qrDataUrl = await QRCode.toDataURL(ticket.id, {
@@ -58,21 +58,21 @@ export async function generateTicketPDF(ticket: TicketData): Promise<void> {
     });
 
     // QR Code centered
-    const qrSize = 50;
-    pdf.addImage(qrDataUrl, 'PNG', (pageWidth - qrSize) / 2, 65, qrSize, qrSize);
+    const qrSize = 45;
+    pdf.addImage(qrDataUrl, 'PNG', (pageWidth - qrSize) / 2, 58, qrSize, qrSize);
 
     // Scan instruction
     pdf.setTextColor(150, 150, 150);
     pdf.setFontSize(10);
-    pdf.text('Présentez ce QR code le jour du vol', pageWidth / 2, 122, { align: 'center' });
+    pdf.text('Présentez ce QR code le jour du vol', pageWidth / 2, 110, { align: 'center' });
 
     // Divider
     pdf.setDrawColor(230, 230, 230);
     pdf.setLineWidth(0.5);
-    pdf.line(margin, 130, pageWidth - margin, 130);
+    pdf.line(margin, 118, pageWidth - margin, 118);
 
     // Details section
-    let yPos = 145;
+    let yPos = 130;
 
     pdf.setTextColor(51, 51, 51);
     pdf.setFontSize(16);
@@ -82,11 +82,11 @@ export async function generateTicketPDF(ticket: TicketData): Promise<void> {
 
     // Formula
     pdf.setFillColor(255, 245, 235);
-    pdf.roundedRect(margin, yPos, contentWidth, 25, 3, 3, 'F');
+    pdf.roundedRect(margin, yPos, contentWidth, 20, 3, 3, 'F');
     pdf.setFontSize(18);
     pdf.setTextColor(255, 102, 0);
-    pdf.text(ticket.formula, pageWidth / 2, yPos + 16, { align: 'center' });
-    yPos += 35;
+    pdf.text(ticket.formula, pageWidth / 2, yPos + 13, { align: 'center' });
+    yPos += 30;
 
     // Options
     if (ticket.options && ticket.options.length > 0) {
@@ -119,35 +119,36 @@ export async function generateTicketPDF(ticket: TicketData): Promise<void> {
         pdf.setFont('helvetica', 'bold');
         pdf.text(item.value, margin, yPos + 6);
         pdf.setFont('helvetica', 'normal');
-        yPos += 18;
+        yPos += 15;
     });
 
     // Warning box
-    yPos += 5;
+    yPos += 2;
     pdf.setFillColor(255, 243, 205);
     pdf.setDrawColor(255, 193, 7);
     pdf.setLineWidth(1);
-    pdf.roundedRect(margin, yPos, contentWidth, 35, 3, 3, 'FD');
+    pdf.roundedRect(margin, yPos, contentWidth, 30, 3, 3, 'FD');
 
     pdf.setTextColor(133, 100, 4);
     pdf.setFontSize(11);
     pdf.setFont('helvetica', 'bold');
-    pdf.text('⚠️ IMPORTANT', margin + 5, yPos + 10);
+    pdf.text('⚠️ IMPORTANT', margin + 5, yPos + 8);
     pdf.setFont('helvetica', 'normal');
     pdf.setFontSize(9);
     const warningText = 'Ce billet ne constitue pas une réservation de date. Appelez Jean-Philippe pour convenir de votre date de vol :';
-    pdf.text(warningText, margin + 5, yPos + 18, { maxWidth: contentWidth - 10 });
+    pdf.text(warningText, margin + 5, yPos + 16, { maxWidth: contentWidth - 10 });
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(12);
-    pdf.text('📞 06 83 03 63 44', margin + 5, yPos + 30);
+    pdf.text('📞 06 83 03 63 44', margin + 5, yPos + 26);
 
     // Footer
     pdf.setFillColor(51, 51, 51);
-    pdf.rect(0, pageHeight - 20, pageWidth, 20, 'F');
+    const footerHeight = 15;
+    pdf.rect(0, pageHeight - footerHeight, pageWidth, footerHeight, 'F');
     pdf.setTextColor(255, 255, 255);
     pdf.setFontSize(9);
     pdf.setFont('helvetica', 'normal');
-    pdf.text('www.jpparapente05.fr | Orcières Merlette - Champsaur - Hautes-Alpes', pageWidth / 2, pageHeight - 8, { align: 'center' });
+    pdf.text('www.jpparapente05.fr | Orcières Merlette - Champsaur - Hautes-Alpes', pageWidth / 2, pageHeight - 6, { align: 'center' });
 
     // Download
     pdf.save(`billet-parapente-${ticket.id}.pdf`);
