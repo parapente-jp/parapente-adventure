@@ -18,8 +18,17 @@ export default function AdminPlanningPage() {
     const [selectedDate, setSelectedDate] = useState<string | null>(null);
     const [loading, setLoading] = useState(true);
     const [message, setMessage] = useState('');
-
     const [pushing, setPushing] = useState(false);
+    const [token, setToken] = useState('');
+    const [repo, setRepo] = useState('parapente-jp/parapente-adventure');
+    const [showSettings, setShowSettings] = useState(false);
+
+    useEffect(() => {
+        const savedToken = localStorage.getItem('gh_token');
+        const savedRepo = localStorage.getItem('gh_repo');
+        if (savedToken) setToken(savedToken);
+        if (savedRepo) setRepo(savedRepo);
+    }, []);
 
     useEffect(() => {
         if (isAuthenticated) {
