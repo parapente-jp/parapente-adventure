@@ -129,17 +129,28 @@ export async function generateTicketPDF(ticket: TicketData): Promise<void> {
     pdf.setLineWidth(1);
     pdf.roundedRect(margin, yPos, contentWidth, 30, 3, 3, 'FD');
 
+    // Draw warning triangle manually
+    pdf.setDrawColor(133, 100, 4);
+    pdf.setLineWidth(0.5);
+    const triX = margin + 5;
+    const triY = yPos + 8;
+    pdf.line(triX, triY, triX - 2, triY + 4);
+    pdf.line(triX, triY, triX + 2, triY + 4);
+    pdf.line(triX - 2, triY + 4, triX + 2, triY + 4);
+    pdf.setFontSize(5);
+    pdf.text('!', triX, triY + 3.2, { align: 'center' });
+
     pdf.setTextColor(133, 100, 4);
     pdf.setFontSize(11);
     pdf.setFont('helvetica', 'bold');
-    pdf.text('⚠️ IMPORTANT', margin + 5, yPos + 8);
+    pdf.text('IMPORTANT', margin + 9, yPos + 8);
     pdf.setFont('helvetica', 'normal');
     pdf.setFontSize(9);
     const warningText = 'Ce billet ne constitue pas une réservation de date. Appelez Jean-Philippe pour convenir de votre date de vol :';
     pdf.text(warningText, margin + 5, yPos + 16, { maxWidth: contentWidth - 10 });
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(12);
-    pdf.text('📞 06 83 03 63 44', margin + 5, yPos + 26);
+    pdf.text('Tel : 06 83 03 63 44', margin + 5, yPos + 26);
 
     // Footer
     pdf.setFillColor(51, 51, 51);
