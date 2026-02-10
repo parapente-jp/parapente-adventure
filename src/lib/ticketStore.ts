@@ -39,8 +39,12 @@ async function readTickets(): Promise<Ticket[]> {
 }
 
 async function writeTickets(tickets: Ticket[]): Promise<void> {
-    await ensureDataDir();
-    await fs.writeFile(TICKETS_FILE, JSON.stringify(tickets, null, 2));
+    try {
+        await ensureDataDir();
+        await fs.writeFile(TICKETS_FILE, JSON.stringify(tickets, null, 2));
+    } catch (error) {
+        console.warn('Could not write tickets to disk (likely read-only filesystem on Vercel):', error);
+    }
 }
 
 export function generateTicketId(): string {
@@ -62,8 +66,12 @@ export async function createTicket(data: Omit<Ticket, 'id' | 'createdAt' | 'vali
         status: 'active'
     };
 
-    tickets.push(ticket);
-    await writeTickets(tickets);
+    try {
+        tickets.push(ticket);
+        await writeTickets(tickets);
+    } catch (error) {
+        console.warn('Failed to persist ticket, but continuing to return it for user download', error);
+    }
 
     return ticket;
 }
