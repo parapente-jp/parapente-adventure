@@ -248,6 +248,16 @@
     transform: scale(1.05);
 }
 
+.cartIcon {
+    width: 20px;
+    height: 20px;
+    transition: all var(--transition-fast);
+}
+
+.cartBtn:hover .cartIcon {
+    stroke: var(--color-white);
+}
+
 .cartBadge {
     position: absolute;
     top: -4px;
