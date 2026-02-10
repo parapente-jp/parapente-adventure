@@ -19,6 +19,11 @@ interface TicketData {
 }
 
 function SuccessContent() {
+    const searchParams = useSearchParams();
+    const sessionId = searchParams.get('session_id');
+    const [isLoading, setIsLoading] = useState(true);
+    const [ticket, setTicket] = useState<TicketData | null>(null);
+    const [error, setError] = useState<string | null>(null);
     const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
     const { t, language } = useLanguage();
     const successT = t.reservation.success;
@@ -62,13 +67,13 @@ function SuccessContent() {
         }
 
         createOrGetTicket();
-    }, [sessionId]);
+    }, [sessionId, successT]);
 
     const handleDownloadPDF = async () => {
         if (!ticket) return;
         setIsGeneratingPDF(true);
         try {
-            await generateTicketPDF(ticket);
+            await generateTicketPDF(ticket, language);
         } catch (error) {
             console.error('Error generating PDF:', error);
             alert(successT.errorPDF);

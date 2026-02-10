@@ -348,6 +348,19 @@ export const translations = {
                 title: "Vols en groupe",
                 desc: "En été, nous sommes 2 ou 3 moniteurs disponibles chaque jour. C'est l'idéal pour voler en même temps ! Appelez-nous pour coordonner vos créneaux."
             }
+        },
+        pdf: {
+            title: "Bon Cadeau / Billet de Vol",
+            scanInstruction: "Présentez ce QR code le jour du vol",
+            flightDetails: "DÉTAILS DU VOL",
+            includedOptions: "Options incluses :",
+            beneficiary: "Bénéficiaire",
+            pricePaid: "Prix payé",
+            purchaseDate: "Date d'achat",
+            validUntil: "Valable jusqu'au",
+            important: "IMPORTANT",
+            warningText: "Ce billet ne constitue pas une réservation de date. Appelez Jean-Philippe pour convenir de votre date de vol :",
+            phone: "Tel : 06 83 03 63 44"
         }
     },
     en: {
@@ -697,6 +710,19 @@ export const translations = {
                 title: "Group Flights",
                 desc: "In summer, 2 or 3 instructors are available daily. Perfect for flying together! Call us to coordinate your slots."
             }
+        },
+        pdf: {
+            title: "Gift Voucher / Flight Ticket",
+            scanInstruction: "Present this QR code on the day of the flight",
+            flightDetails: "FLIGHT DETAILS",
+            includedOptions: "Included options:",
+            beneficiary: "Beneficiary",
+            pricePaid: "Price paid",
+            purchaseDate: "Purchase date",
+            validUntil: "Valid until",
+            important: "IMPORTANT",
+            warningText: "This ticket does not constitute a date reservation. Call Jean-Philippe to agree on your flight date:",
+            phone: "Tel: 06 83 03 63 44"
         }
     }
 };

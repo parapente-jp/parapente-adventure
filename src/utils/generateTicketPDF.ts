@@ -1,7 +1,4 @@
-'use client';
-
-import jsPDF from 'jspdf';
-import QRCode from 'qrcode';
+import { Language, translations as allTranslations } from '@/data/translations';
 
 interface TicketData {
     id: string;
@@ -13,7 +10,10 @@ interface TicketData {
     validUntil: string;
 }
 
-export async function generateTicketPDF(ticket: TicketData): Promise<void> {
+export async function generateTicketPDF(ticket: TicketData, language: Language = 'fr'): Promise<void> {
+    const t = allTranslations[language].pdf;
+    const locale = language === 'fr' ? 'fr-FR' : 'en-GB';
+
     const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
@@ -40,7 +40,7 @@ export async function generateTicketPDF(ticket: TicketData): Promise<void> {
     pdf.text('PARAPENTE ADVENTURE', pageWidth / 2, 15, { align: 'center' });
     pdf.setFontSize(14);
     pdf.setFont('helvetica', 'normal');
-    pdf.text('Bon Cadeau / Billet de Vol', pageWidth / 2, 25, { align: 'center' });
+    pdf.text(t.title, pageWidth / 2, 25, { align: 'center' });
 
     // Ticket ID
     pdf.setFillColor(51, 51, 51);
@@ -64,7 +64,7 @@ export async function generateTicketPDF(ticket: TicketData): Promise<void> {
     // Scan instruction
     pdf.setTextColor(150, 150, 150);
     pdf.setFontSize(10);
-    pdf.text('Présentez ce QR code le jour du vol', pageWidth / 2, 110, { align: 'center' });
+    pdf.text(t.scanInstruction, pageWidth / 2, 110, { align: 'center' });
 
     // Divider
     pdf.setDrawColor(230, 230, 230);
@@ -77,7 +77,7 @@ export async function generateTicketPDF(ticket: TicketData): Promise<void> {
     pdf.setTextColor(51, 51, 51);
     pdf.setFontSize(16);
     pdf.setFont('helvetica', 'bold');
-    pdf.text('DÉTAILS DU VOL', margin, yPos);
+    pdf.text(t.flightDetails, margin, yPos);
     yPos += 12;
 
     // Formula
@@ -92,7 +92,7 @@ export async function generateTicketPDF(ticket: TicketData): Promise<void> {
     if (ticket.options && ticket.options.length > 0) {
         pdf.setTextColor(100, 100, 100);
         pdf.setFontSize(11);
-        pdf.text('Options incluses :', margin, yPos);
+        pdf.text(t.includedOptions, margin, yPos);
         yPos += 7;
         pdf.setTextColor(51, 51, 51);
         ticket.options.forEach(opt => {
@@ -104,10 +104,10 @@ export async function generateTicketPDF(ticket: TicketData): Promise<void> {
 
     // Info grid
     const infoItems = [
-        { label: 'Bénéficiaire', value: ticket.customerName },
-        { label: 'Prix payé', value: `${ticket.price} €` },
-        { label: 'Date d\'achat', value: new Date(ticket.createdAt).toLocaleDateString('fr-FR') },
-        { label: 'Valable jusqu\'au', value: new Date(ticket.validUntil).toLocaleDateString('fr-FR') }
+        { label: t.beneficiary, value: ticket.customerName },
+        { label: t.pricePaid, value: `${ticket.price} €` },
+        { label: t.purchaseDate, value: new Date(ticket.createdAt).toLocaleDateString(locale) },
+        { label: t.validUntil, value: new Date(ticket.validUntil).toLocaleDateString(locale) }
     ];
 
     infoItems.forEach(item => {
@@ -143,14 +143,13 @@ export async function generateTicketPDF(ticket: TicketData): Promise<void> {
     pdf.setTextColor(133, 100, 4);
     pdf.setFontSize(11);
     pdf.setFont('helvetica', 'bold');
-    pdf.text('IMPORTANT', margin + 9, yPos + 8);
+    pdf.text(t.important, margin + 9, yPos + 8);
     pdf.setFont('helvetica', 'normal');
     pdf.setFontSize(9);
-    const warningText = 'Ce billet ne constitue pas une réservation de date. Appelez Jean-Philippe pour convenir de votre date de vol :';
-    pdf.text(warningText, margin + 5, yPos + 16, { maxWidth: contentWidth - 10 });
+    pdf.text(t.warningText, margin + 5, yPos + 16, { maxWidth: contentWidth - 10 });
     pdf.setFont('helvetica', 'bold');
     pdf.setFontSize(12);
-    pdf.text('Tel : 06 83 03 63 44', margin + 5, yPos + 26);
+    pdf.text(t.phone, margin + 5, yPos + 26);
 
     // Footer
     pdf.setFillColor(51, 51, 51);
