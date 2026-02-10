@@ -291,17 +291,36 @@
     }
 
     .grid {
-        grid-template-columns: 1fr;
-        gap: var(--space-6);
-        padding: 0 var(--space-2);
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        gap: var(--space-4);
+        padding: var(--space-4) var(--space-6) var(--space-10);
+        margin: 0 calc(-1 * var(--space-6));
+        scroll-snap-type: x mandatory;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        /* Hide scrollbar Firefox */
+    }
+
+    .grid::-webkit-scrollbar {
+        display: none;
+        /* Hide scrollbar Chrome/Safari */
     }
 
     .card {
-        padding: var(--space-5);
+        flex: 0 0 85%;
+        min-width: 280px;
+        scroll-snap-align: center;
+        padding: var(--space-6);
+        transform: none !important;
+        /* Avoid conflicts with scroll snap */
+        opacity: 1 !important;
     }
 
     .card.popular {
-        order: -1;
+        order: unset;
+        /* Keep original order in scroll */
     }
 }
 
