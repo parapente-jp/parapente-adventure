@@ -23,8 +23,11 @@ export async function POST(request: NextRequest) {
         });
 
         if (!getFileResponse.ok) {
-            console.error('Failed to get file from GitHub:', await getFileResponse.text());
-            return NextResponse.json({ error: 'Erreur lors de la récupération du fichier GitHub' }, { status: 500 });
+            const errorText = await getFileResponse.text();
+            console.error('GitHub API Get File Error:', getFileResponse.status, errorText);
+            return NextResponse.json({
+                error: `GitHub Get Error (${getFileResponse.status}): ${errorText.substring(0, 50)}...`
+            }, { status: getFileResponse.status });
         }
 
         const fileData = await getFileResponse.json();
@@ -48,8 +51,11 @@ export async function POST(request: NextRequest) {
         });
 
         if (!updateResponse.ok) {
-            console.error('Failed to update file on GitHub:', await updateResponse.text());
-            return NextResponse.json({ error: 'Erreur lors de la mise à jour sur GitHub' }, { status: 500 });
+            const errorText = await updateResponse.text();
+            console.error('GitHub API Update Error:', updateResponse.status, errorText);
+            return NextResponse.json({
+                error: `GitHub Update Error (${updateResponse.status}): ${errorText.substring(0, 50)}...`
+            }, { status: updateResponse.status });
         }
 
         return NextResponse.json({ success: true });

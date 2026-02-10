@@ -65,15 +65,22 @@ export default function AdminPlanningPage() {
                 body: JSON.stringify({ closures }),
             });
 
-            const data = await res.json();
-            if (res.ok) {
-                setMessage('🚀 Déploiement lancé !');
+            const contentType = res.headers.get('content-type');
+            if (contentType && contentType.includes('application/json')) {
+                const data = await res.json();
+                if (res.ok) {
+                    setMessage('🚀 Déploiement lancé !');
+                } else {
+                    setMessage(`❌ Erreur: ${data.error || 'Erreur serveur'}`);
+                }
             } else {
-                setMessage(`❌ Erreur: ${data.error || 'Erreur inconnue'}`);
+                const text = await res.text();
+                setMessage(`❌ Erreur serveur (${res.status})`);
+                console.error('Server error (non-JSON):', text);
             }
         } catch (err) {
             console.error('Push fetch error:', err);
-            setMessage('❌ Erreur de connexion au serveur');
+            setMessage('❌ Erreur réseau ou timeout');
         } finally {
             setPushing(false);
             setTimeout(() => setMessage(''), 5000);
