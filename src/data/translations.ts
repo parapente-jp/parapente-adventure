@@ -300,16 +300,40 @@ export const translations = {
             success: {
                 title: "Paiement confirmé !",
                 thanks: "Merci pour votre achat",
+                thanksSubtitle: "Votre paiement a bien été reçu.",
                 warning: "⚠️ IMPORTANT : Votre achat ne constitue pas une réservation de date de vol",
                 warningText: "Pour planifier votre vol, vous devez contacter Jean-Philippe directement par téléphone. Les vols sont soumis aux conditions météorologiques.",
+                actionRequired: "ACTION REQUISE",
                 callNow: "Appeler maintenant",
                 downloadTicket: "Télécharger mon billet PDF",
-                ticketInfo: "Conservez ce billet, il contient un QR code unique qui sera scanné le jour du vol."
+                ticketInfo: "Conservez ce billet, il contient un QR code unique qui sera scanné le jour du vol.",
+                yourTicket: "Votre billet",
+                reference: "Référence",
+                validUntil: "Valable jusqu'au",
+                backHome: "Retour à l'accueil",
+                paymentReference: "Référence paiement",
+                confirming: "Confirmation en cours...",
+                generating: "Génération en cours...",
+                errorNotFound: "Billet non trouvé dans la base de données. Essayez de rafraîchir ou contactez Jean-Philippe.",
+                errorTechnical: "Erreur technique",
+                errorConnection: "Erreur de connexion",
+                errorPDF: "Erreur lors de la génération du PDF. Veuillez réessayer."
             },
             cancel: {
                 title: "Paiement annulé",
-                message: "Votre paiement a été annulé. Vous pouvez réessayer à tout moment.",
-                retry: "Réessayer"
+                subtitle: "Votre paiement a été annulé. Aucun montant n'a été débité.",
+                problem: "🤔 Un problème ?",
+                reasonsTitle: "Plusieurs raisons peuvent expliquer cette annulation :",
+                reason1: "Vous avez changé d'avis sur la formule",
+                reason2: "Vous souhaitez vérifier vos disponibilités",
+                reason3: "Problème avec votre moyen de paiement",
+                payOnSite: "💰 Paiement sur place",
+                payOnSiteText: "Vous pouvez aussi réserver par téléphone et payer directement sur place. Nous acceptons :",
+                contactUs: "📞 Contactez-nous",
+                contactText: "Jean-Philippe est disponible pour répondre à vos questions :",
+                englishSpoken: "English spoken",
+                retry: "Réessayer la réservation",
+                backHome: "Retour à l'accueil"
             }
         },
         tarifs: {
@@ -625,16 +649,40 @@ export const translations = {
             success: {
                 title: "Payment confirmed!",
                 thanks: "Thank you for your purchase",
+                thanksSubtitle: "Your payment has been successfully received.",
                 warning: "⚠️ IMPORTANT: Your purchase does not constitute a flight date reservation",
                 warningText: "To schedule your flight, you must contact Jean-Philippe directly by phone. Flights are subject to weather conditions.",
+                actionRequired: "ACTION REQUIRED",
                 callNow: "Call now",
                 downloadTicket: "Download my PDF ticket",
-                ticketInfo: "Keep this ticket, it contains a unique QR code that will be scanned on the day of your flight."
+                ticketInfo: "Keep this ticket, it contains a unique QR code that will be scanned on the day of your flight.",
+                yourTicket: "Your ticket",
+                reference: "Reference",
+                validUntil: "Valid until",
+                backHome: "Back to home",
+                paymentReference: "Payment reference",
+                confirming: "Confirmation in progress...",
+                generating: "Generating...",
+                errorNotFound: "Ticket not found in the database. Please try refreshing or contact Jean-Philippe.",
+                errorTechnical: "Technical error",
+                errorConnection: "Connection error",
+                errorPDF: "Error generating PDF. Please try again."
             },
             cancel: {
                 title: "Payment cancelled",
-                message: "Your payment has been cancelled. You can try again at any time.",
-                retry: "Try again"
+                subtitle: "Your payment has been cancelled. No amount has been charged.",
+                problem: "🤔 A problem?",
+                reasonsTitle: "Several reasons can explain this cancellation:",
+                reason1: "You changed your mind about the formula",
+                reason2: "You want to check your availability",
+                reason3: "Problem with your payment method",
+                payOnSite: "💰 Pay on site",
+                payOnSiteText: "You can also book by phone and pay directly on site. We accept:",
+                contactUs: "📞 Contact us",
+                contactText: "Jean-Philippe is available to answer your questions:",
+                englishSpoken: "English spoken",
+                retry: "Retry booking",
+                backHome: "Back to home"
             }
         },
         tarifs: {

@@ -1,44 +1,47 @@
 'use client';
 
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 import { siteConfig } from '@/data/site-config';
 import styles from '../success/page.module.css';
 
 export default function ReservationCancelPage() {
+    const { t } = useLanguage();
+    const cancelT = t.reservation.cancel;
+
     return (
         <div className={styles.page}>
             <div className={styles.container}>
                 <div className={styles.content}>
                     <div className={styles.iconCancel}>✕</div>
-                    <h1>Paiement annulé</h1>
+                    <h1>{cancelT.title}</h1>
                     <p className={styles.intro}>
-                        Votre paiement a été annulé. Aucun montant n&apos;a été débité.
+                        {cancelT.subtitle}
                     </p>
 
                     <div className={styles.card}>
-                        <h2>🤔 Un problème ?</h2>
-                        <p>Plusieurs raisons peuvent expliquer cette annulation :</p>
+                        <h2>{cancelT.problem}</h2>
+                        <p>{cancelT.reasonsTitle}</p>
                         <ul className={styles.reasonsList}>
                             <li>
                                 <span>🔄</span>
-                                <span>Vous avez changé d&apos;avis sur la formule</span>
+                                <span>{cancelT.reason1}</span>
                             </li>
                             <li>
                                 <span>📅</span>
-                                <span>Vous souhaitez vérifier vos disponibilités</span>
+                                <span>{cancelT.reason2}</span>
                             </li>
                             <li>
                                 <span>💳</span>
-                                <span>Problème avec votre moyen de paiement</span>
+                                <span>{cancelT.reason3}</span>
                             </li>
                         </ul>
                     </div>
 
                     <div className={styles.card}>
-                        <h2>💰 Paiement sur place</h2>
+                        <h2>{cancelT.payOnSite}</h2>
                         <p>
-                            Vous pouvez aussi réserver par téléphone et payer directement sur place.
-                            Nous acceptons :
+                            {cancelT.payOnSiteText}
                         </p>
                         <ul>
                             <li>Espèces</li>
@@ -49,20 +52,20 @@ export default function ReservationCancelPage() {
                     </div>
 
                     <div className={styles.card}>
-                        <h2>📞 Contactez-nous</h2>
-                        <p>Jean-Philippe est disponible pour répondre à vos questions :</p>
+                        <h2>{cancelT.contactUs}</h2>
+                        <p>{cancelT.contactText}</p>
                         <a href={siteConfig.phoneLink} className={styles.phoneLink}>
                             {siteConfig.phone}
                         </a>
-                        <span className={styles.note}>English spoken</span>
+                        <span className={styles.note}>{cancelT.englishSpoken}</span>
                     </div>
 
                     <div className={styles.actions}>
                         <Link href="/planning" className="btn btn-primary btn-lg">
-                            Réessayer la réservation
+                            {cancelT.retry}
                         </Link>
                         <Link href="/" className="btn btn-outline">
-                            Retour à l&apos;accueil
+                            {cancelT.backHome}
                         </Link>
                     </div>
                 </div>

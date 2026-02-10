@@ -3,6 +3,7 @@
 import { useEffect, useState, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
+import { useLanguage } from '@/context/LanguageContext';
 import { siteConfig } from '@/data/site-config';
 import { generateTicketPDF } from '@/utils/generateTicketPDF';
 import styles from './page.module.css';
@@ -18,12 +19,9 @@ interface TicketData {
 }
 
 function SuccessContent() {
-    const searchParams = useSearchParams();
-    const sessionId = searchParams.get('session_id');
-    const [isLoading, setIsLoading] = useState(true);
-    const [ticket, setTicket] = useState<TicketData | null>(null);
-    const [error, setError] = useState<string | null>(null);
     const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+    const { t, language } = useLanguage();
+    const successT = t.reservation.success;
 
     useEffect(() => {
         async function createOrGetTicket() {
@@ -48,16 +46,16 @@ function SuccessContent() {
                         setTicket(data.ticket);
                     } else {
                         console.error('Ticket not found in response');
-                        setError('Billet non trouvé dans la base de données. Essayez de rafraîchir ou contactez Jean-Philippe.');
+                        setError(successT.errorNotFound);
                     }
                 } else {
                     const errorData = await response.json();
                     console.error('Ticket API error:', errorData.error);
-                    setError(`Erreur technique : ${errorData.error}`);
+                    setError(`${successT.errorTechnical} : ${errorData.error}`);
                 }
             } catch (error: any) {
                 console.error('Error creating ticket:', error);
-                setError(`Erreur de connexion : ${error.message}`);
+                setError(`${successT.errorConnection} : ${error.message}`);
             } finally {
                 setIsLoading(false);
             }
@@ -73,7 +71,7 @@ function SuccessContent() {
             await generateTicketPDF(ticket);
         } catch (error) {
             console.error('Error generating PDF:', error);
-            alert('Erreur lors de la génération du PDF. Veuillez réessayer.');
+            alert(successT.errorPDF);
         }
         setIsGeneratingPDF(false);
     };
@@ -82,17 +80,19 @@ function SuccessContent() {
         return (
             <div className={styles.loading}>
                 <div className={styles.spinner}></div>
-                <p>Confirmation en cours...</p>
+                <p>{successT.confirming}</p>
             </div>
         );
     }
 
+    const locale = language === 'fr' ? 'fr-FR' : 'en-GB';
+
     return (
         <div className={styles.content}>
             <div className={styles.iconSuccess}>✓</div>
-            <h1>Paiement confirmé !</h1>
+            <h1>{successT.title}</h1>
             <p className={styles.intro}>
-                Merci pour votre achat. Votre paiement a bien été reçu.
+                {successT.thanks}. {successT.thanksSubtitle}
             </p>
 
             {error && (
@@ -105,15 +105,15 @@ function SuccessContent() {
             <div className={styles.warningBox}>
                 <div className={styles.warningIcon}>⚠️</div>
                 <div className={styles.warningContent}>
-                    <h3>ACTION REQUISE</h3>
+                    <h3>{successT.actionRequired}</h3>
                     <p>
-                        <strong>L&apos;achat de ce billet ne constitue PAS une réservation de date de vol.</strong>
+                        <strong>{successT.warning}</strong>
                     </p>
                     <p>
-                        Vous devez <strong>OBLIGATOIREMENT appeler Jean-Philippe</strong> pour convenir d&apos;une date et d&apos;un horaire de vol.
+                        {successT.warningText}
                     </p>
                     <a href={siteConfig.phoneLink} className={styles.callButton}>
-                        📞 Appeler maintenant : {siteConfig.phone}
+                        📞 {successT.callNow} : {siteConfig.phone}
                     </a>
                 </div>
             </div>
@@ -121,15 +121,15 @@ function SuccessContent() {
             {/* Ticket Download */}
             {ticket && (
                 <div className={styles.card}>
-                    <h2>🎫 Votre billet</h2>
-                    <p>Référence : <strong>{ticket.id}</strong></p>
-                    <p>Valable jusqu&apos;au : <strong>{new Date(ticket.validUntil).toLocaleDateString('fr-FR')}</strong></p>
+                    <h2>🎫 {successT.yourTicket}</h2>
+                    <p>{successT.reference} : <strong>{ticket.id}</strong></p>
+                    <p>{successT.validUntil} : <strong>{new Date(ticket.validUntil).toLocaleDateString(locale)}</strong></p>
                     <button
                         onClick={handleDownloadPDF}
                         disabled={isGeneratingPDF}
                         className={styles.downloadButton}
                     >
-                        {isGeneratingPDF ? 'Génération en cours...' : '📄 Télécharger mon billet PDF'}
+                        {isGeneratingPDF ? successT.generating : `📄 ${successT.downloadTicket}`}
                     </button>
                 </div>
             )}
@@ -138,13 +138,13 @@ function SuccessContent() {
 
             <div className={styles.actions}>
                 <Link href="/" className="btn btn-primary btn-lg">
-                    Retour à l&apos;accueil
+                    {successT.backHome}
                 </Link>
             </div>
 
             {sessionId && (
                 <p className={styles.reference}>
-                    Référence paiement : {sessionId.slice(-8).toUpperCase()}
+                    {successT.paymentReference} : {sessionId.slice(-8).toUpperCase()}
                 </p>
             )}
         </div>
@@ -152,13 +152,16 @@ function SuccessContent() {
 }
 
 export default function ReservationSuccessPage() {
+    const { t } = useLanguage();
+    const successT = t.reservation.success;
+
     return (
         <div className={styles.page}>
             <div className={styles.container}>
                 <Suspense fallback={
                     <div className={styles.loading}>
                         <div className={styles.spinner}></div>
-                        <p>Chargement...</p>
+                        <p>{successT.confirming}</p>
                     </div>
                 }>
                     <SuccessContent />
