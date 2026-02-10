@@ -37,25 +37,15 @@
 }
 
 .logoImg {
-    height: 80px;
+    height: 100px;
     width: auto;
     display: block;
     transition: all var(--transition-base);
     filter: brightness(0) invert(1);
 }
 
-.logoText {
-    font-family: var(--font-display);
-    font-size: var(--text-2xl);
-    font-weight: 800;
-    color: var(--color-white);
-    letter-spacing: 0.05em;
-    text-transform: uppercase;
-    transition: all var(--transition-base);
-}
-
 .header.scrolled .logoImg {
-    height: 65px;
+    height: 70px;
     filter: none;
 }
 

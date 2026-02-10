@@ -36,7 +36,6 @@ export default function Header() {
                 {/* Logo */}
                 <Link href="/" className={styles.logo}>
                     <img src="/logo_transparent.png" alt={siteConfig.name} className={styles.logoImg} />
-                    <span className={styles.logoText}>PARAPENTE ADVENTURE</span>
                 </Link>
 
                 {/* Desktop Navigation */}
