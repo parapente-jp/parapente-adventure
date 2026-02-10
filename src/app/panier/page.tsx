@@ -14,58 +14,8 @@ export default function PanierPage() {
     const [isCheckingOut, setIsCheckingOut] = useState(false);
     const [error, setError] = useState('');
 
-    const t = {
-        fr: {
-            heroTitle: 'Votre Panier',
-            heroSubtitle: 'Finalisez votre commande de vols et bons cadeaux',
-            giftNotice: 'Achat de votre Bon Cadeau :',
-            giftNoticeText: 'Votre commande valide un pré-paiement sans date fixe. Pour réserver votre créneau ou pour voler en même temps à plusieurs (vols simultanés possibles en été), appelez Jean-Philippe au',
-            giftNoticeEnd: 'avant ou après votre achat afin de choisir ensemble le jour idéal selon la météo.',
-            emptyCart: 'Votre panier est vide',
-            emptyCartText: 'Ajoutez un vol pour commencer votre aventure !',
-            viewFormulas: 'Voir les formules',
-            availableOptions: 'Options disponibles :',
-            acrobatie: 'Acrobatie',
-            pilotage: 'Initiation Pilotage',
-            video: 'Photos & Vidéos',
-            clearCart: 'Vider le panier',
-            summary: 'Récapitulatif',
-            contraindications: 'Contre-indications importantes',
-            contraPregnant: 'Activité proscrite pour les femmes enceintes.',
-            contraHandicap: 'Pas de qualification pour faire voler les personnes handicapées (PMR).',
-            pay: 'Payer',
-            redirecting: 'Redirection...',
-            securePayment: '🔒 Paiement sécurisé par Stripe',
-            connectionError: 'Erreur de connexion. Veuillez réessayer.',
-            paymentError: 'Erreur lors de la création du paiement',
-            total: 'Total'
-        },
-        en: {
-            heroTitle: 'Your Cart',
-            heroSubtitle: 'Complete your flight and gift voucher order',
-            giftNotice: 'Gift Voucher Purchase:',
-            giftNoticeText: 'Your order validates a pre-payment without a fixed date. To book your slot or to fly together with others (simultaneous flights available in summer), call Jean-Philippe at',
-            giftNoticeEnd: 'before or after your purchase to choose the ideal day together based on weather.',
-            emptyCart: 'Your cart is empty',
-            emptyCartText: 'Add a flight to start your adventure!',
-            viewFormulas: 'View formulas',
-            availableOptions: 'Available options:',
-            acrobatie: 'Acrobatics',
-            pilotage: 'Piloting Introduction',
-            video: 'Photos & Videos',
-            clearCart: 'Clear cart',
-            summary: 'Summary',
-            contraindications: 'Important contraindications',
-            contraPregnant: 'Activity prohibited for pregnant women.',
-            contraHandicap: 'No qualification to fly people with disabilities (PMR).',
-            pay: 'Pay',
-            redirecting: 'Redirecting...',
-            securePayment: '🔒 Secure payment by Stripe',
-            connectionError: 'Connection error. Please try again.',
-            paymentError: 'Error creating payment',
-            total: 'Total'
-        }
-    }[language];
+    const { t, language } = useLanguage();
+    const cartT = t.reservation.cart;
 
     const handleCheckout = async () => {
         if (items.length === 0) return;
@@ -76,9 +26,12 @@ export default function PanierPage() {
         try {
             const lineItems = items.map(item => ({
                 formulaId: item.formulaId,
-                formulaName: item.formulaName,
+                formulaName: translateFormulaName(item.formulaId) || item.formulaName,
                 price: item.price,
-                options: item.options,
+                options: item.options.map(opt => ({
+                    ...opt,
+                    name: translateOptionName(opt.id) || opt.name
+                })),
                 quantity: item.quantity
             }));
 
@@ -93,19 +46,38 @@ export default function PanierPage() {
             if (data.url) {
                 window.location.href = data.url;
             } else {
-                setError(data.error || t.paymentError);
+                setError(data.error || cartT.paymentError);
             }
         } catch {
-            setError(t.connectionError);
+            setError(cartT.connectionError);
         } finally {
             setIsCheckingOut(false);
         }
     };
 
+    const translateFormulaName = (formulaId: string) => {
+        const idToKey: Record<string, { season: 'summer' | 'winter'; key: string }> = {
+            'decouverte-ete': { season: 'summer', key: 'decouverte' },
+            'ascendances': { season: 'summer', key: 'ascendances' },
+            'balade': { season: 'summer', key: 'balade' },
+            'decouverte-hiver': { season: 'winter', key: 'decouverte' },
+            'promenade-hiver': { season: 'winter', key: 'grandVol' },
+        };
+
+        const mapping = idToKey[formulaId];
+        // @ts-ignore
+        return t.formulaData?.[mapping?.season]?.[mapping?.key]?.name;
+    };
+
+    const translateOptionName = (optionId: string) => {
+        // @ts-ignore
+        return t.formulaData?.options?.[optionId];
+    };
+
     const availableOptions = [
-        { id: 'acrobatie', name: t.acrobatie, price: 10 },
-        { id: 'pilotage', name: t.pilotage, price: 10 },
-        { id: 'video', name: t.video, price: 30 },
+        { id: 'acrobatie', name: cartT.acrobatie, price: 10 },
+        { id: 'pilotage', name: cartT.pilotage, price: 10 },
+        { id: 'photo-video', name: cartT['photo-video'], price: 30 },
     ];
 
     return (
@@ -115,7 +87,7 @@ export default function PanierPage() {
                 <div className={styles.heroBackground}>
                     <Image
                         src="/gallery/G0100428-1024x768.jpg"
-                        alt={t.heroTitle}
+                        alt={cartT.heroTitle}
                         fill
                         priority
                         className={styles.heroImage}
@@ -123,9 +95,9 @@ export default function PanierPage() {
                     <div className={styles.heroOverlay}></div>
                 </div>
                 <div className={styles.heroContent}>
-                    <h1 className={styles.heroTitle}>{t.heroTitle}</h1>
+                    <h1 className={styles.heroTitle}>{cartT.heroTitle}</h1>
                     <p className={styles.heroSubtitle}>
-                        {t.heroSubtitle}
+                        {cartT.heroSubtitle}
                     </p>
                 </div>
             </section>
@@ -137,11 +109,11 @@ export default function PanierPage() {
                     <div className={styles.noticeIcon}>🎁</div>
                     <div>
                         <p>
-                            <strong>{t.giftNotice}</strong> {t.giftNoticeText}{' '}
+                            <strong>{cartT.giftNotice}</strong> {cartT.giftNoticeText}{' '}
                             <a href={siteConfig.phoneLink} className={styles.inlinePhone}>
                                 {siteConfig.phone}
                             </a>{' '}
-                            {t.giftNoticeEnd}
+                            {cartT.giftNoticeEnd}
                         </p>
                     </div>
                 </div>
@@ -149,10 +121,10 @@ export default function PanierPage() {
                 {items.length === 0 ? (
                     <div className={styles.emptyCart}>
                         <div className={styles.emptyIcon}>🎈</div>
-                        <h2>{t.emptyCart}</h2>
-                        <p>{t.emptyCartText}</p>
+                        <h2>{cartT.empty}</h2>
+                        <p>{cartT.emptyText}</p>
                         <Link href="/tarifs" className="btn btn-primary btn-lg">
-                            {t.viewFormulas}
+                            {cartT.viewFormulas}
                         </Link>
                     </div>
                 ) : (
@@ -162,16 +134,17 @@ export default function PanierPage() {
                                 {items.map(item => {
                                     const optionsTotal = item.options.reduce((s, o) => s + o.price, 0);
                                     const itemTotal = (item.price + optionsTotal) * item.quantity;
+                                    const localizedName = translateFormulaName(item.formulaId) || item.formulaName;
 
                                     return (
                                         <div key={item.id} className={styles.cartItem}>
                                             <div className={styles.itemInfo}>
-                                                <h3>{item.formulaName}</h3>
+                                                <h3>{localizedName}</h3>
                                                 <p className={styles.itemDuration}>{item.duration}</p>
 
                                                 {/* Options toggle */}
                                                 <div className={styles.optionsSection}>
-                                                    <span className={styles.optionsLabel}>{t.availableOptions}</span>
+                                                    <span className={styles.optionsLabel}>{cartT.availableOptions}</span>
                                                     <div className={styles.optionsList}>
                                                         {availableOptions.map(opt => {
                                                             const isSelected = item.options.some(o => o.id === opt.id);
@@ -219,19 +192,20 @@ export default function PanierPage() {
                                 })}
 
                                 <button onClick={clearCart} className={styles.clearBtn}>
-                                    {t.clearCart}
+                                    {cartT.clearCart}
                                 </button>
                             </div>
 
                             <div className={styles.cartSummary}>
-                                <h2>{t.summary}</h2>
+                                <h2>{cartT.summary}</h2>
 
                                 <div className={styles.summaryLines}>
                                     {items.map(item => {
                                         const optionsTotal = item.options.reduce((s, o) => s + o.price, 0);
+                                        const localizedName = translateFormulaName(item.formulaId) || item.formulaName;
                                         return (
                                             <div key={item.id} className={styles.summaryLine}>
-                                                <span>{item.formulaName} × {item.quantity}</span>
+                                                <span>{localizedName} × {item.quantity}</span>
                                                 <span>{(item.price + optionsTotal) * item.quantity}€</span>
                                             </div>
                                         );
@@ -239,7 +213,7 @@ export default function PanierPage() {
                                 </div>
 
                                 <div className={styles.totalLine}>
-                                    <span>{t.total}</span>
+                                    <span>{cartT.total}</span>
                                     <span className={styles.totalPrice}>{totalPrice}€</span>
                                 </div>
 
@@ -250,11 +224,11 @@ export default function PanierPage() {
                                             <path d="M12 9v4"></path>
                                             <path d="M12 17h.01"></path>
                                         </svg>
-                                        {t.contraindications}
+                                        {cartT.contraindications}
                                     </div>
                                     <ul className={styles.contraList}>
-                                        <li><strong>{t.contraPregnant}</strong></li>
-                                        <li><strong>{t.contraHandicap}</strong></li>
+                                        <li><strong>{cartT.contraPregnant}</strong></li>
+                                        <li><strong>{cartT.contraHandicap}</strong></li>
                                     </ul>
                                 </div>
 
@@ -266,10 +240,10 @@ export default function PanierPage() {
                                     className="btn btn-primary btn-lg"
                                     style={{ width: '100%' }}
                                 >
-                                    {isCheckingOut ? t.redirecting : `${t.pay} ${totalPrice}€`}
+                                    {isCheckingOut ? cartT.redirecting : `${cartT.pay} ${totalPrice}€`}
                                 </button>
 
-                                <p className={styles.secureNote}>{t.securePayment}</p>
+                                <p className={styles.secureNote}>{cartT.securePayment}</p>
 
 
                             </div>
