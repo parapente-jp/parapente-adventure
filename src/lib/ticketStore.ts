@@ -140,7 +140,7 @@ export async function validateTicket(id: string): Promise<{ success: boolean; me
     if (ticket.status === 'used') {
         return {
             success: false,
-            message: `Billet déjà utilisé le ${new Date(ticket.usedAt!).toLocaleDateString('fr-FR')}`,
+            message: `Billet déjà utilisé le ${new Date(ticket.usedAt!).toLocaleString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' })}`,
             ticket
         };
     }

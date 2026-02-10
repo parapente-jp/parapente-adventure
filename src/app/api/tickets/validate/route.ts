@@ -38,7 +38,9 @@ export async function GET(request: NextRequest) {
                 { status: 400 }
             );
         }
-
+        if (!process.env.GITHUB_TOKEN) {
+            console.error('SERVER: GITHUB_TOKEN is missing in environment variables');
+        }
         const ticket = await getTicket(ticketId);
 
         if (!ticket) {
