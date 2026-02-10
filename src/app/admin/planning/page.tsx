@@ -55,32 +55,72 @@ export default function AdminPlanningPage() {
         }
     };
 
+    const saveSettings = () => {
+        localStorage.setItem('gh_token', token);
+        localStorage.setItem('gh_repo', repo);
+        setShowSettings(false);
+        setMessage('✅ Paramètres enregistrés');
+        setTimeout(() => setMessage(''), 3000);
+    };
+
     const handlePush = async () => {
+        if (!token || !repo) {
+            setShowSettings(true);
+            setMessage('⚠️ Veuillez configurer GitHub');
+            return;
+        }
+
         setPushing(true);
-        setMessage('⏳ Propagation en cours...');
+        setMessage('⏳ Propagation vers GitHub...');
+
         try {
-            const res = await fetch('/api/admin/push', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ closures }),
+            // 1. Get the current file SHA from GitHub
+            const getFileResponse = await fetch(`https://api.github.com/repos/${repo}/contents/src/data/closures.json`, {
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'User-Agent': 'Parapente-Adventure-Admin'
+                },
             });
 
-            const contentType = res.headers.get('content-type');
-            if (contentType && contentType.includes('application/json')) {
-                const data = await res.json();
-                if (res.ok) {
-                    setMessage('🚀 Déploiement lancé !');
-                } else {
-                    setMessage(`❌ Erreur: ${data.error || 'Erreur serveur'}`);
-                }
-            } else {
-                const text = await res.text();
-                setMessage(`❌ Erreur serveur (${res.status})`);
-                console.error('Server error (non-JSON):', text);
+            if (!getFileResponse.ok) {
+                const errorText = await getFileResponse.text();
+                throw new Error(`Erreur GitHub (${getFileResponse.status}): ${errorText.substring(0, 50)}`);
             }
-        } catch (err) {
-            console.error('Push fetch error:', err);
-            setMessage('❌ Erreur réseau ou timeout');
+
+            const fileData = await getFileResponse.json();
+            const sha = fileData.sha;
+
+            // 2. Update the file on GitHub
+            const jsonContent = JSON.stringify(closures, null, 2);
+            // Use TextEncoder to handle UTF-8 properly for base64
+            const base64Content = btoa(unescape(encodeURIComponent(jsonContent)));
+
+            const updateResponse = await fetch(`https://api.github.com/repos/${repo}/contents/src/data/closures.json`, {
+                method: 'PUT',
+                headers: {
+                    'Authorization': `token ${token}`,
+                    'Accept': 'application/vnd.github.v3+json',
+                    'Content-Type': 'application/json',
+                    'User-Agent': 'Parapente-Adventure-Admin'
+                },
+                body: JSON.stringify({
+                    message: 'admin: update calendar closures',
+                    content: base64Content,
+                    sha: sha,
+                    branch: 'main'
+                }),
+            });
+
+            if (!updateResponse.ok) {
+                const errorText = await updateResponse.text();
+                throw new Error(`Erreur Update (${updateResponse.status}): ${errorText.substring(0, 50)}`);
+            }
+
+            setMessage('🚀 Déploiement lancé sur GitHub !');
+        } catch (err: any) {
+            console.error('Push error:', err);
+            setMessage(`❌ ${err.message || 'Erreur de connexion'}`);
         } finally {
             setPushing(false);
             setTimeout(() => setMessage(''), 5000);
@@ -154,14 +194,54 @@ export default function AdminPlanningPage() {
             <div className="container">
                 <div className={styles.headerRow}>
                     <h1 className={styles.title}>📅 Gestion Planning</h1>
-                    <button
-                        className={styles.pushBtn}
-                        onClick={handlePush}
-                        disabled={pushing}
-                    >
-                        {pushing ? '⏳ Envoi...' : '🚀 Propager sur le site'}
-                    </button>
+                    <div className={styles.headerActions}>
+                        <button
+                            className={styles.settingsBtn}
+                            onClick={() => setShowSettings(!showSettings)}
+                            title="Configuration"
+                        >
+                            ⚙️
+                        </button>
+                        <button
+                            className={styles.pushBtn}
+                            onClick={handlePush}
+                            disabled={pushing}
+                        >
+                            {pushing ? '⏳ Envoi...' : '🚀 Propager sur le site'}
+                        </button>
+                    </div>
                 </div>
+
+                {showSettings && (
+                    <div className={styles.settingsPanel}>
+                        <div className={styles.settingsTitle}>
+                            <span>⚙️ Configuration GitHub</span>
+                        </div>
+                        <div className={styles.settingsGroup}>
+                            <div className={styles.inputField}>
+                                <label>Dépôt (ex: owner/repo)</label>
+                                <input
+                                    type="text"
+                                    value={repo}
+                                    onChange={(e) => setRepo(e.target.value)}
+                                    placeholder="parapente-jp/parapente-adventure"
+                                />
+                            </div>
+                            <div className={styles.inputField}>
+                                <label>Token d'accès personnel (Classic ou Fine-grained)</label>
+                                <input
+                                    type="password"
+                                    value={token}
+                                    onChange={(e) => setToken(e.target.value)}
+                                    placeholder="ghp_xxxxxxxxxxxx"
+                                />
+                            </div>
+                            <button className={styles.saveSettingsBtn} onClick={saveSettings}>
+                                Sauvegarder dans ce navigateur
+                            </button>
+                        </div>
+                    </div>
+                )}
 
                 <div className={styles.calendarContainer}>
                     <div className={styles.calendarControls}>

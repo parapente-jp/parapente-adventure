@@ -42,6 +42,118 @@
     background: #94a3b8;
 }
 
+.settingsBtn {
+    background: #f1f5f9;
+    border: 1px solid #e2e8f0;
+    width: 44px;
+    height: 44px;
+    border-radius: var(--radius-full);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-size: 20px;
+    transition: all 0.2s;
+    color: #64748b;
+}
+
+.settingsBtn:hover {
+    background: #e2e8f0;
+    color: #1a202c;
+    transform: rotate(30deg);
+}
+
+.settingsPanel {
+    background: white;
+    padding: var(--space-6);
+    border-radius: var(--radius-2xl);
+    border: 1px solid #e2e8f0;
+    margin-bottom: var(--space-8);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    animation: slideDown 0.3s ease-out;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.settingsTitle {
+    font-size: 14px;
+    font-weight: 800;
+    text-transform: uppercase;
+    color: #64748b;
+    margin-bottom: var(--space-4);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.settingsGroup {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.inputField {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+.inputField label {
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    color: #94a3b8;
+}
+
+.inputField input {
+    padding: var(--space-2) var(--space-4);
+    border: 1px solid #e2e8f0;
+    border-radius: var(--radius-lg);
+    font-size: 14px;
+    background: #f8fafc;
+    transition: all 0.2s;
+}
+
+.inputField input:focus {
+    outline: none;
+    border-color: var(--color-primary);
+    background: white;
+}
+
+.saveSettingsBtn {
+    background: #1a202c;
+    color: white;
+    padding: var(--space-2);
+    border-radius: var(--radius-lg);
+    border: none;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: var(--space-2);
+}
+
+.saveSettingsBtn:hover {
+    opacity: 0.9;
+}
+
+.headerActions {
+    display: flex;
+    align-items: center;
+    gap: var(--space-4);
+}
+
 .calendarContainer {
     max-width: 900px;
     margin: 0 auto;
