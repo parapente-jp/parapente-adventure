@@ -161,8 +161,10 @@ export default function PlanningPage() {
                                         ))}
                                         {calendarDays.map((date, i) => {
                                             if (!date) return <div key={`empty-${i}`} className={styles.empty} />;
-                                            const dateStr = date.toISOString().split('T')[0];
-                                            const isToday = dateStr === new Date().toISOString().split('T')[0];
+                                            const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                                            const today = new Date();
+                                            const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+                                            const isToday = dateStr === todayStr;
                                             const closureReason = closures[dateStr];
                                             const reasonObj = closureReason ? REASONS.find(r => r.id === closureReason) : null;
                                             return (

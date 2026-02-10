@@ -183,8 +183,10 @@ export default function AdminPlanningPage() {
                         {days.map((date, i) => {
                             if (!date) return <div key={`empty-${i}`} className={styles.empty} />;
 
-                            const dateStr = date.toISOString().split('T')[0];
-                            const isToday = dateStr === new Date().toISOString().split('T')[0];
+                            const dateStr = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                            const today = new Date();
+                            const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, '0')}-${String(today.getDate()).padStart(2, '0')}`;
+                            const isToday = dateStr === todayStr;
                             const closureReason = closures[dateStr];
 
                             return (
@@ -216,8 +218,8 @@ export default function AdminPlanningPage() {
             {selectedDate && (
                 <div className={styles.overlay} onClick={() => setSelectedDate(null)}>
                     <div className={styles.selectionBox} onClick={e => e.stopPropagation()}>
-                        <h3 style={{ textAlign: 'center' }}>
-                            {new Date(selectedDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
+                        <h3 style={{ textAlign: 'center', marginBottom: 'var(--space-2)' }}>
+                            {new Date(selectedDate + 'T00:00:00').toLocaleDateString('fr-FR', { day: 'numeric', month: 'long' })}
                         </h3>
 
                         <div className={styles.reasonGrid}>
