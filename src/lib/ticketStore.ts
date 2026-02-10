@@ -1,6 +1,9 @@
-import { promises as fs } from 'fs';
 import path from 'path';
 import crypto from 'crypto';
+
+const GITHUB_TOKEN = process.env.GITHUB_TOKEN;
+const GITHUB_REPO = 'parapente-jp/parapente-adventure';
+const TICKETS_PATH = 'src/data/tickets.json';
 
 export interface Ticket {
     id: string;
@@ -17,33 +20,71 @@ export interface Ticket {
     usedAt?: string;
 }
 
-const DATA_DIR = path.join(process.cwd(), 'data');
-const TICKETS_FILE = path.join(DATA_DIR, 'tickets.json');
-
-async function ensureDataDir() {
-    try {
-        await fs.access(DATA_DIR);
-    } catch {
-        await fs.mkdir(DATA_DIR, { recursive: true });
-    }
-}
-
 async function readTickets(): Promise<Ticket[]> {
-    await ensureDataDir();
+    if (!GITHUB_TOKEN) {
+        console.warn('GITHUB_TOKEN not configured, ticket persistence will fail');
+        return [];
+    }
+
     try {
-        const data = await fs.readFile(TICKETS_FILE, 'utf-8');
-        return JSON.parse(data);
-    } catch {
+        const response = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${TICKETS_PATH}`, {
+            headers: {
+                'Authorization': `token ${GITHUB_TOKEN}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Cache-Control': 'no-cache'
+            },
+        });
+
+        if (!response.ok) return [];
+
+        const data = await response.json();
+        const content = Buffer.from(data.content, 'base64').toString('utf-8');
+        return JSON.parse(content);
+    } catch (error) {
+        console.error('Error reading tickets from GitHub:', error);
         return [];
     }
 }
 
 async function writeTickets(tickets: Ticket[]): Promise<void> {
+    if (!GITHUB_TOKEN) return;
+
     try {
-        await ensureDataDir();
-        await fs.writeFile(TICKETS_FILE, JSON.stringify(tickets, null, 2));
+        // 1. Get current file SHA
+        const getFileResponse = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${TICKETS_PATH}`, {
+            headers: {
+                'Authorization': `token ${GITHUB_TOKEN}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Cache-Control': 'no-cache'
+            },
+        });
+
+        let sha = '';
+        if (getFileResponse.ok) {
+            const fileData = await getFileResponse.json();
+            sha = fileData.sha;
+        }
+
+        // 2. Update file
+        const content = JSON.stringify(tickets, null, 2);
+        const base64Content = Buffer.from(content).toString('base64');
+
+        await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${TICKETS_PATH}`, {
+            method: 'PUT',
+            headers: {
+                'Authorization': `token ${GITHUB_TOKEN}`,
+                'Accept': 'application/vnd.github.v3+json',
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                message: 'admin: update tickets database',
+                content: base64Content,
+                sha: sha || undefined,
+                branch: 'main'
+            }),
+        });
     } catch (error) {
-        console.warn('Could not write tickets to disk (likely read-only filesystem on Vercel):', error);
+        console.error('Error writing tickets to GitHub:', error);
     }
 }
 

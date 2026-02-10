@@ -33,17 +33,21 @@ export async function POST(request: NextRequest) {
         // Check if ticket already exists for this session
         const existingTicket = await getTicketBySession(stripeSessionId);
         if (existingTicket) {
+            console.log('Returning existing ticket for session:', stripeSessionId);
             return NextResponse.json({ ticket: existingTicket });
         }
 
         // Retrieve the session from Stripe to get real data
+        console.log('Retrieving Stripe session:', stripeSessionId);
         const session = await stripe.checkout.sessions.retrieve(stripeSessionId);
 
         if (!session) {
+            console.error('Stripe session not found:', stripeSessionId);
             return NextResponse.json({ error: 'Session not found' }, { status: 404 });
         }
 
         const metadata = session.metadata;
+        console.log('Creating ticket for customer:', metadata?.customerName);
         const ticket = await createTicket({
             stripeSessionId,
             formula: metadata?.formulaName || 'Vol Parapente',
@@ -54,11 +58,12 @@ export async function POST(request: NextRequest) {
             customerPhone: metadata?.customerPhone
         });
 
+        console.log('Ticket created successfully:', ticket.id);
         return NextResponse.json({ ticket });
-    } catch (error) {
+    } catch (error: any) {
         console.error('Error creating ticket:', error);
         return NextResponse.json(
-            { error: 'Failed to create ticket' },
+            { error: `Failed to create ticket: ${error.message}` },
             { status: 500 }
         );
     }

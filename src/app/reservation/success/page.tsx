@@ -44,6 +44,9 @@ function SuccessContent() {
                 if (response.ok) {
                     const data = await response.json();
                     setTicket(data.ticket);
+                } else {
+                    const errorData = await response.json();
+                    console.error('Ticket API error:', errorData.error);
                 }
             } catch (error) {
                 console.error('Error creating ticket:', error);
