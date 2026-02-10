@@ -1,5 +1,4 @@
 import Hero from '@/components/sections/Hero';
-import Reassurance from '@/components/sections/Reassurance';
 import HowItWorks from '@/components/sections/HowItWorks';
 import Formules from '@/components/sections/Formules';
 import About from '@/components/sections/About';
