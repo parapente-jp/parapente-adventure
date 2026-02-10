@@ -69,7 +69,7 @@ export default function PlanningPage() {
     useEffect(() => {
         const fetchClosures = async () => {
             try {
-                const res = await fetch('/api/closures');
+                const res = await fetch(`/api/closures?_=${Date.now()}`, { cache: 'no-store' });
                 const data = await res.json();
                 setClosures(data);
             } catch (error) {

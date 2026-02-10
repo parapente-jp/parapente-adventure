@@ -38,7 +38,7 @@ export default function AdminPlanningPage() {
 
     const fetchClosures = async () => {
         try {
-            const res = await fetch('/api/closures');
+            const res = await fetch(`/api/closures?_=${Date.now()}`, { cache: 'no-store' });
             const data = await res.json();
             setClosures(data);
         } catch (error) {
@@ -83,13 +83,14 @@ export default function AdminPlanningPage() {
         setMessage('⏳ Propagation vers GitHub...');
 
         try {
-            // 1. Get the current file SHA from GitHub
-            const getFileResponse = await fetch(`https://api.github.com/repos/${repo}/contents/src/data/closures.json`, {
+            // 1. Get the current file SHA from GitHub - add cache buster to avoid stale SHA
+            const getFileResponse = await fetch(`https://api.github.com/repos/${repo}/contents/src/data/closures.json?ref=main&_=${Date.now()}`, {
                 headers: {
                     'Authorization': `token ${token}`,
                     'Accept': 'application/vnd.github.v3+json',
                     'User-Agent': 'Parapente-Adventure-Admin'
                 },
+                cache: 'no-store'
             });
 
             if (!getFileResponse.ok) {
