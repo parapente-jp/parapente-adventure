@@ -18,6 +18,7 @@ export async function POST(request: NextRequest) {
             headers: {
                 'Authorization': `token ${token}`,
                 'Accept': 'application/vnd.github.v3+json',
+                'User-Agent': 'Parapente-Adventure-Admin'
             },
         });
 
@@ -36,6 +37,7 @@ export async function POST(request: NextRequest) {
                 'Authorization': `token ${token}`,
                 'Accept': 'application/vnd.github.v3+json',
                 'Content-Type': 'application/json',
+                'User-Agent': 'Parapente-Adventure-Admin'
             },
             body: JSON.stringify({
                 message: 'admin: update calendar closures',

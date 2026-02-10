@@ -64,14 +64,16 @@ export default function AdminPlanningPage() {
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ closures }),
             });
+
             const data = await res.json();
             if (res.ok) {
                 setMessage('🚀 Déploiement lancé !');
             } else {
-                setMessage(`❌ Erreur: ${data.error}`);
+                setMessage(`❌ Erreur: ${data.error || 'Erreur inconnue'}`);
             }
-        } catch {
-            setMessage('❌ Erreur de connexion');
+        } catch (err) {
+            console.error('Push fetch error:', err);
+            setMessage('❌ Erreur de connexion au serveur');
         } finally {
             setPushing(false);
             setTimeout(() => setMessage(''), 5000);
