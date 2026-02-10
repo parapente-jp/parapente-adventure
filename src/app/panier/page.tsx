@@ -10,11 +10,10 @@ import styles from './page.module.css';
 
 export default function PanierPage() {
     const { items, removeItem, updateQuantity, toggleOption, clearCart, totalPrice } = useCart();
-    const { language } = useLanguage();
+    const { t, language } = useLanguage();
     const [isCheckingOut, setIsCheckingOut] = useState(false);
     const [error, setError] = useState('');
 
-    const { t, language } = useLanguage();
     const cartT = t.reservation.cart;
 
     const handleCheckout = async () => {

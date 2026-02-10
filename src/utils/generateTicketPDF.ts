@@ -1,3 +1,5 @@
+import jsPDF from 'jspdf';
+import QRCode from 'qrcode';
 import { Language, translations as allTranslations } from '@/data/translations';
 
 interface TicketData {
