@@ -1,10 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
 import styles from './Reassurance.module.css';
 
 export default function Reassurance() {
     const { t } = useLanguage();
+    const [activeItem, setActiveItem] = useState<string | null>(null);
 
     const items = [
         {
@@ -46,12 +48,18 @@ export default function Reassurance() {
         }
     ];
 
+    const currentItem = items.find(item => item.id === activeItem);
+
     return (
         <section className={styles.section}>
             <div className={styles.container}>
                 <div className={styles.grid}>
                     {items.map((item) => (
-                        <div key={item.id} className={styles.item}>
+                        <div
+                            key={item.id}
+                            className={styles.item}
+                            onClick={() => setActiveItem(item.id)}
+                        >
                             <div className={styles.iconWrapper}>
                                 {item.icon}
                             </div>
@@ -61,6 +69,20 @@ export default function Reassurance() {
                     ))}
                 </div>
             </div>
+
+            {/* Mobile Modal */}
+            {activeItem && currentItem && (
+                <div className={styles.modalOverlay} onClick={() => setActiveItem(null)}>
+                    <div className={styles.modal} onClick={e => e.stopPropagation()}>
+                        <button className={styles.closeButton} onClick={() => setActiveItem(null)}>×</button>
+                        <div className={styles.modalIcon}>
+                            {currentItem.icon}
+                        </div>
+                        <h3 className={styles.modalTitle}>{currentItem.title}</h3>
+                        <p className={styles.modalDesc}>{currentItem.desc}</p>
+                    </div>
+                </div>
+            )}
         </section>
     );
 }
