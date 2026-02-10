@@ -70,9 +70,10 @@ export async function POST(request: NextRequest) {
             },
         ];
 
-        const successUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/reservation/success?session_id={CHECKOUT_SESSION_ID}`;
-        const cancelUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/reservation/cancel`;
-        console.log('Checkout success_url:', successUrl);
+        const origin = request.headers.get('origin') || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+        const successUrl = `${origin}/reservation/success?session_id={CHECKOUT_SESSION_ID}`;
+        const cancelUrl = `${origin}/reservation/cancel`;
+        console.log('Checkout redirection URLs:', { successUrl, cancelUrl });
 
         // Créer la session Stripe Checkout
         const session = await stripe.checkout.sessions.create({

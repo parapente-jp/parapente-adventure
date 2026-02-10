@@ -52,8 +52,10 @@ export async function POST(request: NextRequest) {
             };
         });
 
-        const successUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/reservation/success?session_id={CHECKOUT_SESSION_ID}`;
-        console.log('Cart checkout success_url:', successUrl);
+        const origin = request.headers.get('origin') || process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+        const successUrl = `${origin}/reservation/success?session_id={CHECKOUT_SESSION_ID}`;
+        const cancelUrl = `${origin}/panier`;
+        console.log('Cart checkout redirection URLs:', { successUrl, cancelUrl });
 
         // Créer la session Stripe Checkout
         const session = await stripe.checkout.sessions.create({
@@ -61,7 +63,7 @@ export async function POST(request: NextRequest) {
             line_items: lineItems,
             mode: 'payment',
             success_url: successUrl,
-            cancel_url: `${process.env.NEXT_PUBLIC_BASE_URL}/panier`,
+            cancel_url: cancelUrl,
             locale: 'fr',
             metadata: {
                 type: 'bon_cadeau',
