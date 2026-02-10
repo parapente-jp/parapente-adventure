@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "id": "TKT-6768C53E",
+    "stripeSessionId": "cs_test_a1meDCrhIqiGBZgWZHUSUFMwB9s4DL6fdqjfroMXnigQrUPh8wNNdCrAmI",
+    "formula": "Vol Parapente",
+    "options": [],
+    "price": 180,
+    "customerEmail": "noa.rochet@gmail.com",
+    "customerName": "Client",
+    "createdAt": "2026-02-10T11:51:03.071Z",
+    "validUntil": "2027-02-10T11:51:03.071Z",
+    "status": "active"
+  }
+]
