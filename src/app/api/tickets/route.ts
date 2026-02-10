@@ -4,15 +4,20 @@ import { createTicket, getTicketBySession, getAllTickets } from '@/lib/ticketSto
 
 const stripe = process.env.STRIPE_SECRET_KEY
     ? new Stripe(process.env.STRIPE_SECRET_KEY, {
-        apiVersion: '2026-01-28.clover' as any,
+        apiVersion: '2025-01-27.acacia' as any,
     })
     : null;
 
 // POST - Create a new ticket
 export async function POST(request: NextRequest) {
     try {
+        if (!process.env.STRIPE_SECRET_KEY) {
+            console.error('Missing STRIPE_SECRET_KEY');
+            return NextResponse.json({ error: 'Config: Clé secrète manquante' }, { status: 500 });
+        }
         if (!stripe) {
-            return NextResponse.json({ error: 'Stripe non configuré' }, { status: 500 });
+            console.error('Stripe failed to initialize');
+            return NextResponse.json({ error: 'Stripe: Erreur d\'initialisation' }, { status: 500 });
         }
         const body = await request.json();
 
