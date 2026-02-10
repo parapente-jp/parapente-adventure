@@ -157,7 +157,7 @@ function SuccessContent() {
 }
 
 export default function ReservationSuccessPage() {
-    const { t } = useLanguage();
+    const { t, language } = useLanguage();
     const successT = t.reservation.success;
 
     return (
@@ -169,7 +169,7 @@ export default function ReservationSuccessPage() {
                         <p>{successT.confirming}</p>
                     </div>
                 }>
-                    <SuccessContent />
+                    <SuccessContent key={language} />
                 </Suspense>
             </div>
         </div>
