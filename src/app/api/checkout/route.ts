@@ -21,8 +21,13 @@ interface CheckoutRequest {
 
 export async function POST(request: NextRequest) {
     try {
+        if (!process.env.STRIPE_SECRET_KEY) {
+            console.error('Missing STRIPE_SECRET_KEY');
+            return NextResponse.json({ error: 'Config: Clé secrète manquante' }, { status: 500 });
+        }
         if (!stripe) {
-            return NextResponse.json({ error: 'Stripe non configuré' }, { status: 500 });
+            console.error('Stripe failed to initialize even with key');
+            return NextResponse.json({ error: 'Stripe: Erreur d\'initialisation' }, { status: 500 });
         }
         const body: CheckoutRequest = await request.json();
         const { formulaId, options, customerName, customerEmail, customerPhone, date, weight, participants } = body;
