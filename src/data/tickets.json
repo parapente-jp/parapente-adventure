@@ -33,6 +33,7 @@
     "customerName": "Client",
     "createdAt": "2026-02-10T12:06:58.585Z",
     "validUntil": "2027-02-10T12:06:58.585Z",
-    "status": "active"
+    "status": "used",
+    "usedAt": "2026-02-10T12:08:31.524Z"
   }
 ]
