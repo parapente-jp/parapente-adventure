@@ -276,7 +276,12 @@
 
 @media (max-width: 768px) {
     .ctaBanner {
-        padding: var(--space-16) 0;
+        padding: var(--space-12) 0;
+    }
+
+    .ctaTitle {
+        font-size: 2rem;
+        /* Ensure title isn't huge on mobile */
     }
 
     .ctaButtons {
@@ -287,46 +292,61 @@
     }
 
     .mainFooter {
-        padding: var(--space-12) 0;
+        padding: var(--space-10) 0 var(--space-6);
     }
 
     .grid {
         grid-template-columns: 1fr;
-        gap: var(--space-12);
+        gap: var(--space-8);
         text-align: center;
     }
 
     .brandColumn {
         grid-column: span 1;
         align-items: center;
+        gap: var(--space-4);
     }
 
     .footerLogoImg {
-        height: 70px;
-        margin: 0 auto var(--space-4);
+        height: 60px;
+        margin: 0 auto var(--space-2);
     }
 
     .description {
         max-width: 400px;
         margin: 0 auto;
+        font-size: 0.85rem;
     }
 
     .languages {
         align-items: center;
+        flex-direction: row;
+        /* Horizontal on mobile to save space */
+        justify-content: center;
+        gap: var(--space-4);
     }
 
     .columnTitle {
-        margin-bottom: var(--space-6);
+        margin-bottom: var(--space-4);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
 
     .navList {
         align-items: center;
+        gap: var(--space-3);
+    }
+
+    .navLink {
+        padding: var(--space-1) 0;
+        /* Increase touch target area */
     }
 
     .contactList {
         align-items: center;
-        gap: var(--space-4);
-        margin-bottom: var(--space-8);
+        gap: var(--space-3);
+        margin-bottom: var(--space-6);
     }
 
     .contactItem {
@@ -334,23 +354,35 @@
     }
 
     .bookBtn {
-        max-width: 320px;
+        max-width: 100%;
+        /* Full width button in column context */
         margin: 0 auto;
     }
 
     .bottomBar {
-        margin-top: var(--space-16);
+        margin-top: var(--space-8);
     }
 
     .bottomContent {
-        flex-direction: column;
-        gap: var(--space-6);
+        flex-direction: column-reverse;
+        /* Copyright at bottom */
+        gap: var(--space-4);
         text-align: center;
     }
 
     .legalLinks {
-        flex-direction: column;
-        gap: var(--space-4);
+        flex-direction: row;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-4) var(--space-6);
         align-items: center;
+    }
+
+    .legalLink {
+        font-size: 0.75rem;
+    }
+
+    .copyright {
+        font-size: 0.75rem;
     }
 }

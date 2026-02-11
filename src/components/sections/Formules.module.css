@@ -283,44 +283,56 @@
 /* Responsive */
 @media (max-width: 768px) {
     .section {
-        padding: var(--space-10) 0;
+        padding: var(--space-8) 0;
+        overflow: hidden;
     }
 
-    .title {
-        font-size: var(--text-3xl);
+    .container {
+        padding: 0;
+    }
+
+    .header {
+        padding: 0 var(--space-6);
+        margin-bottom: var(--space-6);
     }
 
     .grid {
-        display: flex;
-        flex-wrap: nowrap;
-        overflow-x: auto;
-        gap: var(--space-4);
-        padding: var(--space-4) var(--space-6) var(--space-10);
-        margin: 0 calc(-1 * var(--space-6));
+        display: flex !important;
+        flex-wrap: nowrap !important;
+        justify-content: flex-start !important;
+        overflow-x: auto !important;
         scroll-snap-type: x mandatory;
-        -webkit-overflow-scrolling: touch;
+        scroll-padding: 0 var(--space-6);
+        padding: var(--space-4) var(--space-6) var(--space-8);
+        gap: var(--space-4);
         scrollbar-width: none;
-        /* Hide scrollbar Firefox */
+        -webkit-overflow-scrolling: touch;
+        width: 100%;
     }
 
     .grid::-webkit-scrollbar {
         display: none;
-        /* Hide scrollbar Chrome/Safari */
     }
 
     .card {
-        flex: 0 0 85%;
-        min-width: 280px;
+        flex: 0 0 80vw;
         scroll-snap-align: center;
-        padding: var(--space-6);
-        transform: none !important;
-        /* Avoid conflicts with scroll snap */
         opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+        margin: 0;
+        padding: var(--space-6);
     }
 
     .card.popular {
         order: unset;
-        /* Keep original order in scroll */
+        transform: scale(1.02);
+        z-index: 2;
+    }
+
+    .bottomCta {
+        margin: 0 var(--space-6);
+        padding: var(--space-6);
     }
 }
 

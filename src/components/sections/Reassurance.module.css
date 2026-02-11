@@ -1,0 +1,151 @@
+.reassurance {
+    padding: var(--space-8) 0;
+    background: white;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.container {
+    max-width: var(--container-xl);
+    margin: 0 auto;
+    padding: 0 var(--space-6);
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-6);
+}
+
+.card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    padding: var(--space-6);
+    background: var(--color-background);
+    border-radius: var(--radius-xl);
+    border: 2px solid var(--color-primary);
+    transition: all var(--transition-base);
+    cursor: default;
+}
+
+.card:hover {
+    transform: translateY(-3px);
+    box-shadow: var(--shadow-md);
+    background: white;
+}
+
+.clickable {
+    cursor: pointer !important;
+}
+
+.iconWrapper {
+    width: 40px;
+    height: 40px;
+    color: var(--color-primary);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: var(--space-4);
+}
+
+.title {
+    font-size: var(--text-base);
+    font-weight: 800;
+    color: var(--color-text);
+    margin-bottom: var(--space-2);
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+}
+
+.description {
+    font-size: var(--text-sm);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-light);
+    margin: 0;
+}
+
+/* Modal specific styles */
+.modalIcon {
+    width: 48px;
+    height: 48px;
+    color: var(--color-primary);
+    margin-bottom: var(--space-4);
+}
+
+.modalDesc {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-light);
+}
+
+@media (max-width: 1024px) {
+    .grid {
+        gap: var(--space-4);
+    }
+
+    .card {
+        padding: var(--space-4);
+    }
+}
+
+@media (max-width: 768px) {
+    .reassurance {
+        padding: var(--space-3) 0;
+    }
+
+    .grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-2);
+    }
+
+    .card {
+        padding: var(--space-3) var(--space-1);
+        min-height: 95px;
+        justify-content: center;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+        background: white;
+        border-width: 2px;
+        transition: all var(--transition-base);
+    }
+
+    .card:active {
+        transform: scale(0.95);
+        background: var(--color-background);
+        border-color: var(--color-primary-dark);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .iconWrapper {
+        width: 24px;
+        height: 24px;
+        margin-bottom: var(--space-1);
+    }
+
+    .title {
+        font-size: 0.6rem;
+        margin-bottom: 0;
+        line-height: 1.2;
+        padding: 0 2px;
+        font-weight: 800;
+        letter-spacing: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        width: 100%;
+    }
+
+    .title::after {
+        content: '+';
+        display: inline-block;
+        font-size: 0.8rem;
+        opacity: 0.6;
+        color: var(--color-primary);
+    }
+
+    .description {
+        display: none;
+        /* Hidden on mobile */
+    }
+}

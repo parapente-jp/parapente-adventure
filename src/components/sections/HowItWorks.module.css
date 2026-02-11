@@ -41,7 +41,7 @@
 
 .title {
     font-size: clamp(2rem, 4vw, 3rem);
-    font-weight: var(--font-bold);
+    font-weight: var(--font-semibold);
     color: var(--color-text);
     margin-bottom: var(--space-4);
     letter-spacing: -0.02em;
@@ -84,6 +84,7 @@
     z-index: 1;
     opacity: 0;
     transform: translateY(30px);
+    cursor: default;
 }
 
 .section.visible .step {
@@ -151,6 +152,25 @@
     margin: 0 auto;
 }
 
+/* Modal specific styles */
+.modalIcon {
+    width: 48px;
+    height: 48px;
+    color: var(--color-primary);
+    margin-bottom: var(--space-4);
+}
+
+.modalIcon svg {
+    width: 100%;
+    height: 100%;
+}
+
+.modalDesc {
+    font-size: var(--text-base);
+    line-height: var(--leading-relaxed);
+    color: var(--color-text-light);
+}
+
 /* Responsive */
 @media (max-width: 1024px) {
     .timeline {
@@ -163,59 +183,67 @@
     }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 768px) {
     .section {
-        padding: var(--space-12) 0;
+        padding: var(--space-8) 0;
+    }
+
+    .header {
+        margin-bottom: var(--space-8);
     }
 
     .timeline {
-        grid-template-columns: 1fr;
-        gap: var(--space-10);
-        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: var(--space-2);
+        padding: 0 var(--space-2);
     }
 
-    /* Vertical Path Line */
     .timeline::before {
-        display: block;
-        position: absolute;
-        width: 2px;
-        top: 30px;
-        /* Start from center of first icon */
-        bottom: 30px;
-        /* End at center of last icon */
-        left: 30px;
-        /* Center of 60px icon */
-        right: auto;
-        height: auto;
-        background: var(--color-primary);
-        opacity: 0.2;
-        z-index: 0;
+        display: none;
     }
 
     .step {
-        display: grid;
-        grid-template-columns: 60px 1fr;
-        grid-template-rows: auto auto;
-        gap: 0 var(--space-6);
-        text-align: left;
-        position: relative;
-        z-index: 1;
+        width: calc(33.333% - var(--space-2));
+        min-width: 100px;
+        min-height: 95px;
+        padding: var(--space-3) var(--space-1);
+        background: white;
+        border: 2px solid var(--color-primary);
+        border-radius: var(--radius-xl);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.12);
+        cursor: pointer;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transition: all var(--transition-base);
+    }
+
+    .clickable {
+        cursor: pointer !important;
+    }
+
+    .step:active {
+        transform: scale(0.95);
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        border-color: var(--color-primary-dark);
+        background: var(--color-background);
     }
 
     .stepIcon {
-        grid-row: span 2;
-        width: 60px;
-        height: 60px;
-        margin: 0;
-        background: var(--color-white);
-        z-index: 2;
-        box-shadow: 0 0 0 10px var(--color-background);
-        /* Masks the line behind the icon */
+        width: 30px;
+        height: 30px;
+        border-width: 1px;
+        margin-bottom: var(--space-1);
+        box-shadow: none;
+        background: transparent;
     }
 
     .stepIcon svg {
-        width: 24px;
-        height: 24px;
+        width: 18px;
+        height: 18px;
     }
 
     .stepNumber {
@@ -223,16 +251,28 @@
     }
 
     .stepTitle {
-        align-self: end;
-        margin-bottom: var(--space-1);
-        font-size: var(--text-lg);
+        font-size: 0.65rem;
+        margin-bottom: 0;
+        line-height: 1.2;
+        font-weight: 800;
+        text-transform: uppercase;
+        color: var(--color-primary);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 2px;
+        width: 100%;
+    }
+
+    .stepTitle::after {
+        content: '+';
+        display: inline-block;
+        font-size: 0.8rem;
+        opacity: 0.6;
     }
 
     .stepDescription {
-        max-width: none;
-        align-self: start;
-        margin: 0;
-        font-size: var(--text-base);
-        line-height: 1.4;
+        display: none;
+        /* Hidden on mobile */
     }
 }

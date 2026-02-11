@@ -365,6 +365,7 @@
     transition: transform var(--transition-base);
     overflow-y: auto;
     display: none;
+    z-index: 50;
 }
 
 .mobileMenu.open {

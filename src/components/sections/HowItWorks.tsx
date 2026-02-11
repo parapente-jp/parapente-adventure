@@ -2,13 +2,12 @@
 
 import { useRef, useEffect, useState } from 'react';
 import { useLanguage } from '@/context/LanguageContext';
+import Modal from '@/components/ui/Modal';
 import styles from './HowItWorks.module.css';
 
-const steps = [
+const stepsData = [
     {
         number: '01',
-        title: 'Réservation',
-        description: 'Appelez-nous pour réserver. Nous confirmons votre créneau selon la météo.',
         icon: (
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z" strokeLinecap="round" strokeLinejoin="round" />
@@ -17,8 +16,6 @@ const steps = [
     },
     {
         number: '02',
-        title: 'Rendez-vous',
-        description: 'On se retrouve au point de décollage. Prévoyez des vêtements chauds et des chaussures fermées.',
         icon: (
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1118 0z" strokeLinecap="round" strokeLinejoin="round" />
@@ -28,8 +25,6 @@ const steps = [
     },
     {
         number: '03',
-        title: 'Briefing',
-        description: 'Explications de sécurité, présentation du matériel et des consignes de décollage.',
         icon: (
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M9 12l2 2 4-4" strokeLinecap="round" strokeLinejoin="round" />
@@ -39,8 +34,6 @@ const steps = [
     },
     {
         number: '04',
-        title: 'Le Vol',
-        description: "C'est parti pour le grand saut ! Profitez d'une vue époustouflante et laissez-vous porter par les sensations uniques du vol libre.",
         icon: (
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <path d="M12 2L2 7l10 5 10-5-10-5z" strokeLinecap="round" strokeLinejoin="round" />
@@ -51,8 +44,6 @@ const steps = [
     },
     {
         number: '05',
-        title: 'Souvenirs',
-        description: 'Gardez une trace de votre aventure ! Vos photos et vidéos HD vous attendent pour revivre et partager ces moments exceptionnels.',
         icon: (
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2" strokeLinecap="round" strokeLinejoin="round" />
@@ -67,8 +58,17 @@ export default function HowItWorks() {
     const { t } = useLanguage();
     const sectionRef = useRef<HTMLElement>(null);
     const [isVisible, setIsVisible] = useState(false);
+    const [activeModal, setActiveModal] = useState<number | null>(null);
+    const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
+        const checkMobile = () => {
+            setIsMobile(window.innerWidth <= 768);
+        };
+
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
@@ -82,8 +82,17 @@ export default function HowItWorks() {
             observer.observe(sectionRef.current);
         }
 
-        return () => observer.disconnect();
+        return () => {
+            window.removeEventListener('resize', checkMobile);
+            observer.disconnect();
+        };
     }, []);
+
+    const handleStepClick = (index: number) => {
+        if (isMobile) {
+            setActiveModal(index);
+        }
+    };
 
     return (
         <section
@@ -103,11 +112,12 @@ export default function HowItWorks() {
 
                 {/* Timeline */}
                 <div className={styles.timeline}>
-                    {steps.map((step, index) => (
+                    {stepsData.map((step, index) => (
                         <div
                             key={step.number}
-                            className={styles.step}
+                            className={`${styles.step} ${isMobile ? styles.clickable : ''}`}
                             style={{ animationDelay: `${index * 0.15}s` }}
+                            onClick={() => handleStepClick(index)}
                         >
                             <div className={styles.stepIcon}>
                                 {step.icon}
@@ -119,6 +129,19 @@ export default function HowItWorks() {
                     ))}
                 </div>
             </div>
+
+            {/* Modals for Mobile */}
+            {isMobile && stepsData.map((step, index) => (
+                <Modal
+                    key={`step-modal-${index}`}
+                    isOpen={activeModal === index}
+                    onClose={() => setActiveModal(null)}
+                    title={t.howItWorks.steps[index].title}
+                    icon={<div className={styles.modalIcon}>{step.icon}</div>}
+                >
+                    <p className={styles.modalDesc}>{t.howItWorks.steps[index].desc}</p>
+                </Modal>
+            ))}
         </section>
     );
 }

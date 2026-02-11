@@ -1,17 +1,14 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
-import Modal from '@/components/ui/Modal';
 import styles from './Hero.module.css';
 
 export default function Hero() {
     const { t } = useLanguage();
-    const [activeModal, setActiveModal] = useState<string | null>(null);
     const backgroundRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
-
     useEffect(() => {
         const handleScroll = () => {
             const scrollY = window.scrollY;
@@ -67,22 +64,6 @@ export default function Hero() {
                         </Link>
                     </div>
 
-                    {/* Trust Indicators (Interactive Badges) */}
-                    <div className={styles.trust}>
-                        <button className={styles.trustItem} onClick={() => setActiveModal('vertigo')}>
-                            <span className={styles.trustIcon}>⛰️</span>
-                            {t.reassurance.vertigo.title}
-                        </button>
-                        <button className={styles.trustItem} onClick={() => setActiveModal('forEveryone')}>
-                            <span className={styles.trustIcon}>👨‍👩‍👧‍👦</span>
-                            {t.reassurance.forEveryone.title}
-                        </button>
-                        <button className={styles.trustItem} onClick={() => setActiveModal('listening')}>
-                            <span className={styles.trustIcon}>💬</span>
-                            {t.reassurance.listening.title}
-                        </button>
-                    </div>
-
                     {/* Stats Bar (Pastilles) */}
                     <div className={styles.statsBar}>
                         <div className={styles.statItem}>
@@ -124,34 +105,6 @@ export default function Hero() {
                     </div>
                 </div>
             </div>
-
-            {/* Reassurance Modals */}
-            <Modal
-                isOpen={activeModal === 'vertigo'}
-                onClose={() => setActiveModal(null)}
-                title={t.reassurance.vertigo.title}
-                icon={<span style={{ fontSize: '2rem' }}>⛰️</span>}
-            >
-                <p>{t.reassurance.vertigo.desc}</p>
-            </Modal>
-
-            <Modal
-                isOpen={activeModal === 'forEveryone'}
-                onClose={() => setActiveModal(null)}
-                title={t.reassurance.forEveryone.title}
-                icon={<span style={{ fontSize: '2rem' }}>👨‍👩‍👧‍👦</span>}
-            >
-                <p>{t.reassurance.forEveryone.desc}</p>
-            </Modal>
-
-            <Modal
-                isOpen={activeModal === 'listening'}
-                onClose={() => setActiveModal(null)}
-                title={t.reassurance.listening.title}
-                icon={<span style={{ fontSize: '2rem' }}>💬</span>}
-            >
-                <p>{t.reassurance.listening.desc}</p>
-            </Modal>
         </section >
     );
 }

@@ -172,7 +172,7 @@
 /* Responsive */
 @media (max-width: 768px) {
     .section {
-        padding: var(--space-12) 0;
+        padding: var(--space-8) 0;
     }
 
     .title {
@@ -180,26 +180,43 @@
     }
 
     .grid {
-        grid-template-columns: repeat(2, 1fr);
-        grid-template-rows: repeat(3, 150px);
+        display: flex !important;
+        grid-template-columns: none !important;
+        grid-template-rows: none !important;
+        gap: var(--space-4);
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        margin: 0 calc(var(--space-6) * -1) var(--space-8);
+        padding: 0 var(--space-6) var(--space-4);
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
     }
 
-    .imageWrapper:first-child {
-        grid-row: span 1;
+    .grid::-webkit-scrollbar {
+        display: none;
     }
 
+    .imageWrapper {
+        flex: 0 0 80vw;
+        height: 250px;
+        scroll-snap-align: center;
+        opacity: 1 !important;
+        transform: none !important;
+        /* Reset any grid specific styles */
+        grid-column: auto !important;
+        grid-row: auto !important;
+    }
+
+    /* Ensure overrides specifically target the nth-child selectors from desktop */
+    .imageWrapper:first-child,
     .imageWrapper:nth-child(4) {
-        grid-column: span 1;
-    }
-}
-
-@media (max-width: 480px) {
-    .grid {
-        grid-template-columns: 1fr;
-        grid-template-rows: repeat(6, 180px);
+        grid-column: auto !important;
+        grid-row: auto !important;
     }
 
-    .imageWrapper:nth-child(4) {
-        grid-column: span 1;
+    .overlay {
+        opacity: 1;
+        /* Keep overlay visible on mobile or user interaction reveals it */
+        background: linear-gradient(to top, rgba(0, 0, 0, 0.7) 0%, transparent 60%);
     }
 }
