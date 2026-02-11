@@ -5,8 +5,10 @@ import Image from 'next/image';
 import { useLanguage } from '@/context/LanguageContext';
 import styles from './About.module.css';
 import { siteConfig } from '@/data/site-config';
+import VideoPlayerCarousel from '@/components/ui/VideoCarousel';
 
 export default function About() {
+    // Rebuild trigger
     const { t, language } = useLanguage();
     const sectionRef = useRef<HTMLElement>(null);
     const [isVisible, setIsVisible] = useState(false);
@@ -105,10 +107,17 @@ export default function About() {
                         </div>
 
                         {/* CTA */}
-                        <a href={siteConfig.phoneLink} className={styles.contactCta}>
-                            <span>{t.about.contact}</span>
-                            <span className={styles.phone}>{siteConfig.phone}</span>
-                        </a>
+                        <div className={styles.actionWrapper}>
+                            <a href={siteConfig.phoneLink} className={styles.contactCta}>
+                                <span>{t.about.contact}</span>
+                                <span className={styles.phone}>{siteConfig.phone}</span>
+                            </a>
+
+                            {/* Video - Bottom Right */}
+                            <div className={styles.videoContainer}>
+                                <VideoPlayerCarousel videos={['/videos/video1.mp4', '/videos/video2.mp4']} />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
