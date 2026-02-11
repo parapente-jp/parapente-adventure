@@ -436,6 +436,7 @@
 
 @media (max-width: 640px) {
     .cartItem {
+        position: relative;
         flex-direction: column;
         align-items: flex-start;
         padding: var(--space-4);
@@ -448,6 +449,14 @@
         padding-top: var(--space-4);
         border-top: 1px solid #f1f5f9;
         gap: var(--space-2);
+    }
+
+    .removeBtn {
+        position: absolute;
+        top: var(--space-4);
+        right: var(--space-4);
+        background: transparent;
+        color: #94a3b8;
     }
 
     .quantityControl {
