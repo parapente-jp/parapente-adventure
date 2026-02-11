@@ -40,7 +40,7 @@ export default function About() {
                     <div className={styles.imageWrapper}>
                         <div className={styles.imageContainer}>
                             <Image
-                                src="/jean-phi.jpg"
+                                src="/jean-phi-enhanced.png"
                                 alt="Jean-Philippe Gayon - Moniteur de parapente"
                                 fill
                                 className={styles.image}
