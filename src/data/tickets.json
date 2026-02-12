@@ -119,5 +119,17 @@
     "createdAt": "2026-02-10T12:47:57.053Z",
     "validUntil": "2027-02-10T12:47:57.053Z",
     "status": "active"
+  },
+  {
+    "id": "TKT-4B20534B",
+    "stripeSessionId": "cs_test_a1HzJ3lqnAWEVfIOAHurAg2dfPcBYIHN05gwyaYlZF15yBFpXZ2bZj4dHK",
+    "formula": "Vol Parapente",
+    "options": [],
+    "price": 140,
+    "customerEmail": "noa.rochet@gmail.com",
+    "customerName": "Client",
+    "createdAt": "2026-02-12T10:09:08.715Z",
+    "validUntil": "2027-02-12T10:09:08.715Z",
+    "status": "active"
   }
 ]
