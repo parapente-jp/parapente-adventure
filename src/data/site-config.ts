@@ -87,7 +87,7 @@ export const formulesEte = [
     duration: "~45 minutes",
     altitude: "Vol longue durée",
     weightMin: 50,
-    weightMax: 100,
+    weightMax: 90,
     price: 160,
     description: "La formule la plus complète ! Une véritable balade aérienne pour admirer toute la beauté de la vallée du Champsaur.",
     features: [

@@ -10,13 +10,13 @@ const galleryImages = [
     { id: 2, src: '/gallery/G0040365-1024x768.jpg', alt: { fr: 'Parapente biplace vol tandem', en: 'Tandem paragliding flight' }, category: 'summer' },
     { id: 3, src: '/gallery/G0061304-1024x768.jpg', alt: { fr: 'Vue panoramique Alpes', en: 'Panoramic Alps view' }, category: 'landscape' },
     { id: 4, src: '/gallery/G0100407-1024x768.jpg', alt: { fr: 'Décollage parapente montagne', en: 'Mountain paragliding takeoff' }, category: 'summer' },
-    { id: 5, src: '/gallery/G0100428-1024x768.jpg', alt: { fr: 'Montagnes enneigées hiver', en: 'Snowy winter mountains' }, category: 'winter' },
+    { id: 5, src: '/gallery/G0100428-1024x768.jpg', alt: { fr: 'Montagnes enneigées hiver', en: 'Snowy winter mountains' }, category: 'summer' },
     { id: 6, src: '/gallery/G0123920-1024x768.jpg', alt: { fr: 'Coucher soleil sommets', en: 'Sunset over peaks' }, category: 'landscape' },
-    { id: 7, src: '/gallery/GOPR0360-1024x768.jpg', alt: { fr: 'Vol parapente panoramique', en: 'Panoramic paragliding flight' }, category: 'winter' },
+    { id: 7, src: '/gallery/GOPR0360-1024x768.jpg', alt: { fr: 'Vol parapente panoramique', en: 'Panoramic paragliding flight' }, category: 'summer' },
     { id: 8, src: '/gallery/GOPR0763-1024x768.jpg', alt: { fr: 'Sommet montagne nuages', en: 'Mountain peak in clouds' }, category: 'landscape' },
     { id: 9, src: '/gallery/G0021882-1024x768.jpg', alt: { fr: 'Vue aérienne vallée', en: 'Aerial valley view' }, category: 'summer' },
     { id: 10, src: '/gallery/20210609_112934-1024x768.jpg', alt: { fr: 'Lever soleil montagne', en: 'Mountain sunrise' }, category: 'landscape' },
-    { id: 11, src: '/gallery/hl-11031081631.jpg', alt: { fr: 'Parapente ciel bleu', en: 'Paragliding blue sky' }, category: 'summer' },
+    { id: 11, src: '/gallery/hl-11031081631.jpg', alt: { fr: 'Parapente ciel bleu', en: 'Paragliding blue sky' }, category: 'winter' },
     { id: 12, src: '/gallery/hl-11031081633.jpg', alt: { fr: 'Ski montagne hiver', en: 'Winter mountain skiing' }, category: 'winter' },
 ];
 

@@ -29,7 +29,7 @@ export const translations = {
             subtitle: "De la réservation à l'atterrissage, tout ce que vous devez savoir",
             steps: [
                 { title: "Réservation", desc: "Appelez-nous pour réserver. Nous confirmons votre créneau selon la météo." },
-                { title: "Rendez-vous", desc: "On se retrouve au point de décollage. Prévoyez des vêtements chauds et des chaussures fermées." },
+                { title: "Rendez-vous", desc: "On se retrouve au point d'atterrissage. Prévoyez des vêtements chauds et des chaussures fermées." },
                 { title: "Briefing", desc: "Explications de sécurité, présentation du matériel et des consignes de décollage." },
                 { title: "Le Vol", desc: "C'est parti pour le grand saut ! Profitez d'une vue époustouflante et laissez-vous porter par les sensations uniques du vol libre." },
                 { title: "Souvenirs", desc: "Gardez une trace de votre aventure ! Vos photos et vidéos HD vous attendent pour revivre et partager ces moments exceptionnels." }
@@ -391,7 +391,7 @@ export const translations = {
             subtitle: "From booking to landing, everything you need to know",
             steps: [
                 { title: "Booking", desc: "Call us to book. We confirm your slot according to the weather." },
-                { title: "Meeting", desc: "We meet at the takeoff point. Bring warm clothes and closed shoes." },
+                { title: "Meeting", desc: "We meet at the landing point. Bring warm clothes and closed shoes." },
                 { title: "Briefing", desc: "Safety explanations, presentation of equipment and takeoff instructions." },
                 { title: "The Flight", desc: "Time to fly! Enjoy breathtaking views and experience the unique sensations of free flight." },
                 { title: "Memories", desc: "Capture your adventure! Your HD photos and videos are ready for you to relive and share these exceptional moments." }

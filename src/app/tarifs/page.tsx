@@ -89,8 +89,8 @@ export default function TarifsPage() {
                     ? "Pas besoin d'être un expert ! Si vous savez descendre une piste bleue en restant stable sur vos skis, vous pouvez décoller avec nous. Le décollage se fait en douceur : on se laisse glisser jusqu'à ce que l'aile nous soulève. Le décollage se fait uniquement en ski."
                     : "No expert skills needed! If you can ski down a blue run with stability, you can take off with us. The takeoff is smooth: we just glide until the wing lifts us. Takeoff is by ski only.")
                 : (language === 'fr'
-                    ? "Nous décollons principalement d'Orcières Merlette (sommet du Drouvet à 2650m) pour son panorama à 360°."
-                    : "We mainly take off from Orcières Merlette (Drouvet peak at 2650m) for its 360° panorama.")
+                    ? "Nous décollons principalement d'Orcières Merlette pour son panorama à 360°."
+                    : "We mainly take off from Orcières Merlette for its 360° panorama.")
         },
         period: {
             title: language === 'fr' ? 'Période & Météo' : 'Period & Weather',
