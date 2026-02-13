@@ -21,6 +21,10 @@ interface CheckoutRequest {
 
 export async function POST(request: NextRequest) {
     try {
+        if (process.env.NEXT_PUBLIC_ENABLE_PAYMENTS !== 'true') {
+            return NextResponse.json({ error: 'Les paiements en ligne sont temporairement désactivés.' }, { status: 503 });
+        }
+
         if (!process.env.STRIPE_SECRET_KEY) {
             console.error('Missing STRIPE_SECRET_KEY');
             return NextResponse.json({ error: 'Config: Clé secrète manquante' }, { status: 500 });

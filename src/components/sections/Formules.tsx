@@ -209,6 +209,10 @@ export default function Formules({
                                 <button
                                     className={`btn ${addedItems.has(formula.id) ? 'btn-success' : (formula.popular ? 'btn-primary' : 'btn-outline')} ${styles.cardCta}`}
                                     onClick={() => {
+                                        if (process.env.NEXT_PUBLIC_ENABLE_PAYMENTS !== 'true') {
+                                            window.location.href = `tel:${process.env.NEXT_PUBLIC_PHONE_NUMBER || '0683036344'}`;
+                                            return;
+                                        }
                                         addItem({
                                             formulaId: formula.id,
                                             formulaName: translatedFormula.name,
@@ -226,7 +230,11 @@ export default function Formules({
                                         }, 2000);
                                     }}
                                 >
-                                    {addedItems.has(formula.id) ? `✓ ${t.formules.addedToCart}` : t.formules.addToCart}
+                                    {process.env.NEXT_PUBLIC_ENABLE_PAYMENTS === 'true' ? (
+                                        addedItems.has(formula.id) ? `✓ ${t.formules.addedToCart}` : t.formules.addToCart
+                                    ) : (
+                                        "Réservation par téléphone"
+                                    )}
                                 </button>
                             </div>
                         );
