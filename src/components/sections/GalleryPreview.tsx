@@ -104,6 +104,7 @@ export default function GalleryPreview() {
                                 fill
                                 className={styles.image}
                                 sizes="(max-width: 768px) 50vw, 33vw"
+                                quality={90}
                             />
                             <div className={styles.overlay}>
                                 <span className={styles.category}>{t.galleryPreview.categories[image.categoryKey]}</span>

@@ -94,6 +94,7 @@ export default function GaleriePage() {
                                     fill
                                     className={styles.image}
                                     sizes="(max-width: 768px) 50vw, 33vw"
+                                    quality={90}
                                 />
                                 <div className={styles.imageOverlay}>
                                     <span className={styles.imageCategory}>{getCategoryLabel(image.category)}</span>
@@ -126,9 +127,11 @@ export default function GaleriePage() {
                         <Image
                             src={selectedImage.src}
                             alt={selectedImage.alt[language]}
-                            width={1200}
-                            height={800}
+                            width={1920}
+                            height={1280}
                             className={styles.lightboxImage}
+                            quality={100}
+                            style={{ objectFit: 'contain', width: '100%', height: 'auto', maxHeight: '80vh' }}
                         />
                         <p className={styles.lightboxCaption}>{selectedImage.alt[language]}</p>
                     </div>
