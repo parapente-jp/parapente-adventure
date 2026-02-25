@@ -269,3 +269,28 @@
     opacity: 0.7;
     cursor: not-allowed;
 }
+
+/* Gift Button */
+.giftButton {
+    width: 100%;
+    padding: 16px 24px;
+    background: linear-gradient(135deg, #f59e0b, #d97706);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-top: 10px;
+}
+
+.giftButton:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(245, 158, 11, 0.4);
+}
+
+.giftButton:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}

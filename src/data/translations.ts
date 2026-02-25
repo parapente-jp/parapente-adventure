@@ -281,7 +281,9 @@ export const translations = {
                 availableOptions: 'Options disponibles :',
                 acrobatie: 'Acrobatie',
                 pilotage: 'Initiation Pilotage',
-                'photo-video': 'Photos & Vidéos',
+                'photo-video': '📷 Photo/Vidéo — à demander sur place',
+                'bon-cadeau': '🎁 Bon Cadeau (PDF à offrir)',
+                bonCadeauHint: 'Un PDF cadeau sera disponible au téléchargement après le paiement',
                 clearCart: 'Vider le panier',
                 summary: 'Récapitulatif',
                 contraindications: 'Contre-indications importantes',
@@ -361,6 +363,18 @@ export const translations = {
             important: "IMPORTANT",
             warningText: "Ce billet ne constitue pas une réservation de date. Appelez Jean-Philippe pour convenir de votre date de vol :",
             phone: "Tel : 06 83 03 63 44"
+        },
+        giftPdf: {
+            mainTitle: "BON CADEAU",
+            subtitle: "Offrez un baptême de parapente inoubliable",
+            includedOptions: "Options incluses :",
+            offeredBy: "Offert par :",
+            forRecipient: "Pour :",
+            personalMessage: "Message personnel :",
+            value: "Valeur",
+            validUntil: "Valable jusqu'au",
+            howToBook: "Comment réserver ?",
+            howToBookText: "Appelez Jean-Philippe au 06 83 03 63 44 pour convenir de la date de vol idéale selon la météo."
         }
     },
     en: {
@@ -643,7 +657,9 @@ export const translations = {
                 availableOptions: 'Available options:',
                 acrobatie: 'Acrobatics',
                 pilotage: 'Piloting Introduction',
-                'photo-video': 'Photos & Videos',
+                'photo-video': '📷 Photo/Video — ask on site',
+                'bon-cadeau': '🎁 Gift Certificate (PDF to offer)',
+                bonCadeauHint: 'A gift PDF will be available for download after payment',
                 clearCart: 'Clear cart',
                 summary: 'Summary',
                 contraindications: 'Important contraindications',
@@ -723,6 +739,18 @@ export const translations = {
             important: "IMPORTANT",
             warningText: "This ticket does not constitute a date reservation. Call Jean-Philippe to agree on your flight date:",
             phone: "Tel: 06 83 03 63 44"
+        },
+        giftPdf: {
+            mainTitle: "GIFT CERTIFICATE",
+            subtitle: "Offer an unforgettable paragliding experience",
+            includedOptions: "Included options:",
+            offeredBy: "Offered by:",
+            forRecipient: "For:",
+            personalMessage: "Personal message:",
+            value: "Value",
+            validUntil: "Valid until",
+            howToBook: "How to book?",
+            howToBookText: "Call Jean-Philippe at 06 83 03 63 44 to arrange the ideal flight date based on weather."
         }
     }
 };

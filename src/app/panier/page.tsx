@@ -76,7 +76,7 @@ export default function PanierPage() {
     const availableOptions = [
         { id: 'acrobatie', name: cartT.acrobatie, price: 10 },
         { id: 'pilotage', name: cartT.pilotage, price: 10 },
-        { id: 'photo-video', name: cartT['photo-video'], price: 30 },
+        { id: 'bon-cadeau', name: cartT['bon-cadeau'], price: 0 },
     ];
 
     return (
@@ -154,10 +154,16 @@ export default function PanierPage() {
                                                                         checked={isSelected}
                                                                         onChange={() => toggleOption(item.id, opt)}
                                                                     />
-                                                                    <span>{opt.name} (+{opt.price}€)</span>
+                                                                    <span>{opt.price > 0 ? `${opt.name} (+${opt.price}€)` : opt.name}</span>
                                                                 </label>
                                                             );
                                                         })}
+                                                    </div>
+                                                    {item.options.some(o => o.id === 'bon-cadeau') && (
+                                                        <p className={styles.giftHint}>✨ {cartT.bonCadeauHint}</p>
+                                                    )}
+                                                    <div className={styles.photoVideoInfo}>
+                                                        <span>{cartT['photo-video']}</span>
                                                     </div>
                                                 </div>
                                             </div>

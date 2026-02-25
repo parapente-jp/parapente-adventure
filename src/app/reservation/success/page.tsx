@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useLanguage } from '@/context/LanguageContext';
 import { siteConfig } from '@/data/site-config';
 import { generateTicketPDF } from '@/utils/generateTicketPDF';
+import { generateGiftPDF } from '@/utils/generateGiftPDF';
 import styles from './page.module.css';
 
 interface TicketData {
@@ -25,6 +26,7 @@ function SuccessContent() {
     const [ticket, setTicket] = useState<TicketData | null>(null);
     const [error, setError] = useState<string | null>(null);
     const [isGeneratingPDF, setIsGeneratingPDF] = useState(false);
+    const [isGeneratingGift, setIsGeneratingGift] = useState(false);
     const { t, language } = useLanguage();
     const successT = t.reservation.success;
 
@@ -135,6 +137,28 @@ function SuccessContent() {
                         className={styles.downloadButton}
                     >
                         {isGeneratingPDF ? successT.generating : `📄 ${successT.downloadTicket}`}
+                    </button>
+                    <button
+                        onClick={async () => {
+                            if (!ticket) return;
+                            setIsGeneratingGift(true);
+                            try {
+                                await generateGiftPDF({
+                                    formulaName: ticket.formula,
+                                    options: ticket.options,
+                                    price: ticket.price,
+                                    ticketId: ticket.id,
+                                    validUntil: ticket.validUntil
+                                }, language);
+                            } catch (error) {
+                                console.error('Error generating gift PDF:', error);
+                            }
+                            setIsGeneratingGift(false);
+                        }}
+                        disabled={isGeneratingGift}
+                        className={styles.giftButton}
+                    >
+                        {isGeneratingGift ? successT.generating : `🎁 ${language === 'fr' ? 'Télécharger le Bon Cadeau' : 'Download Gift Certificate'}`}
                     </button>
                 </div>
             )}

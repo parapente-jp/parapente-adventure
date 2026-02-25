@@ -18,7 +18,7 @@ interface Formula {
     description: string;
     features: string[];
     popular?: boolean;
-    options?: { id: string; name: string; price: number }[];
+    options?: { id: string; name: string; price: number; type?: string }[];
 }
 
 interface FormulesProps {
@@ -200,7 +200,10 @@ export default function Formules({
                                         <span className={styles.optionsLabel}>{t.formules.optionsAvailable}</span>
                                         {translatedFormula.options.map(opt => (
                                             <span key={opt.id} className={styles.optionTag}>
-                                                {opt.name} +{opt.price}€
+                                                {(opt as any).type === 'info'
+                                                    ? `${opt.name} — ${language === 'fr' ? 'à demander sur place' : 'ask on site'}`
+                                                    : `${opt.name} +${opt.price}€`
+                                                }
                                             </span>
                                         ))}
                                     </div>

@@ -56,7 +56,7 @@ export const formulesEte = [
     options: [
       { id: "acrobatie", name: "Acrobatie", price: 10 },
       { id: "pilotage", name: "Pilotage", price: 10 },
-      { id: "photo-video", name: "Photo/Vidéo", price: 30 }
+      { id: "photo-video", name: "Photo/Vidéo", price: 0, type: "info" }
     ]
   },
   {
@@ -78,7 +78,7 @@ export const formulesEte = [
     options: [
       { id: "acrobatie", name: "Acrobatie", price: 10 },
       { id: "pilotage", name: "Pilotage", price: 10 },
-      { id: "photo-video", name: "Photo/Vidéo", price: 30 }
+      { id: "photo-video", name: "Photo/Vidéo", price: 0, type: "info" }
     ]
   },
   {
@@ -100,7 +100,7 @@ export const formulesEte = [
     options: [
       { id: "acrobatie", name: "Acrobatie", price: 10 },
       { id: "pilotage", name: "Pilotage", price: 10 },
-      { id: "photo-video", name: "Photo/Vidéo", price: 30 }
+      { id: "photo-video", name: "Photo/Vidéo", price: 0, type: "info" }
     ]
   }
 ];
@@ -125,7 +125,7 @@ export const formulesHiver = [
     popular: true,
     requirements: ["Savoir descendre une piste bleue facile"],
     options: [
-      { id: "photo-video", name: "Photo/Vidéo", price: 30 }
+      { id: "photo-video", name: "Photo/Vidéo", price: 0, type: "info" }
     ]
   },
   {
@@ -147,7 +147,7 @@ export const formulesHiver = [
     popular: false,
     requirements: ["Savoir descendre une piste bleue facile"],
     options: [
-      { id: "photo-video", name: "Photo/Vidéo", price: 30 }
+      { id: "photo-video", name: "Photo/Vidéo", price: 0, type: "info" }
     ]
   }
 ];
