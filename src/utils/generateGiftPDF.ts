@@ -23,183 +23,245 @@ export async function generateGiftPDF(gift: GiftData, language: Language = 'fr')
     const pageWidth = pdf.internal.pageSize.getWidth();
     const pageHeight = pdf.internal.pageSize.getHeight();
 
-    // === BACKGROUND ===
-    pdf.setFillColor(255, 250, 245);
+    // === RICH BACKGROUND ===
+    // Base warm cream
+    pdf.setFillColor(255, 252, 247);
     pdf.rect(0, 0, pageWidth, pageHeight, 'F');
 
-    // === DECORATIVE BORDER ===
-    // Outer border
-    pdf.setDrawColor(255, 102, 0);
-    pdf.setLineWidth(3);
-    pdf.roundedRect(8, 8, pageWidth - 16, pageHeight - 16, 5, 5);
-
-    // Inner border (thin)
-    pdf.setDrawColor(255, 178, 102);
-    pdf.setLineWidth(0.5);
-    pdf.roundedRect(12, 12, pageWidth - 24, pageHeight - 24, 3, 3);
-
-    // === DECORATIVE CORNER ELEMENTS ===
-    const cornerSize = 15;
-    const corners = [
-        { x: 16, y: 16 },
-        { x: pageWidth - 16 - cornerSize, y: 16 },
-        { x: 16, y: pageHeight - 16 - cornerSize },
-        { x: pageWidth - 16 - cornerSize, y: pageHeight - 16 - cornerSize }
-    ];
-
-    pdf.setDrawColor(255, 140, 50);
-    pdf.setLineWidth(1);
-    corners.forEach(c => {
-        // Small decorative L shapes
-        pdf.line(c.x, c.y, c.x + cornerSize * 0.4, c.y);
-        pdf.line(c.x, c.y, c.x, c.y + cornerSize * 0.4);
-        pdf.line(c.x + cornerSize, c.y, c.x + cornerSize * 0.6, c.y);
-        pdf.line(c.x + cornerSize, c.y, c.x + cornerSize, c.y + cornerSize * 0.4);
-        pdf.line(c.x, c.y + cornerSize, c.x + cornerSize * 0.4, c.y + cornerSize);
-        pdf.line(c.x, c.y + cornerSize, c.x, c.y + cornerSize * 0.6);
-        pdf.line(c.x + cornerSize, c.y + cornerSize, c.x + cornerSize * 0.6, c.y + cornerSize);
-        pdf.line(c.x + cornerSize, c.y + cornerSize, c.x + cornerSize, c.y + cornerSize * 0.6);
-    });
-
-    // === TOP HEADER ===
-    pdf.setFillColor(255, 102, 0);
-    pdf.roundedRect(20, 18, pageWidth - 40, 28, 4, 4, 'F');
-
-    pdf.setTextColor(255, 255, 255);
-    pdf.setFontSize(12);
-    pdf.setFont('helvetica', 'normal');
-    pdf.text('PARAPENTE ADVENTURE', pageWidth / 2, 28, { align: 'center' });
-
-    pdf.setFontSize(9);
-    pdf.text('Orcières Merlette • Champsaur • Hautes-Alpes', pageWidth / 2, 36, { align: 'center' });
-
-    // === MAIN TITLE: BON CADEAU ===
-    const titleY = 60;
-    pdf.setTextColor(255, 102, 0);
-    pdf.setFontSize(42);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text(t.mainTitle, pageWidth / 2, titleY, { align: 'center' });
-
-    // Decorative line under title
-    pdf.setDrawColor(255, 140, 50);
-    pdf.setLineWidth(1.5);
-    const lineWidth = 80;
-    pdf.line(pageWidth / 2 - lineWidth / 2, titleY + 4, pageWidth / 2 + lineWidth / 2, titleY + 4);
-
-    // Small diamond in center of line
-    const dX = pageWidth / 2;
-    const dY = titleY + 4;
-    pdf.setFillColor(255, 102, 0);
-    pdf.triangle(dX, dY - 2.5, dX + 2.5, dY, dX, dY + 2.5, 'F');
-    pdf.triangle(dX, dY - 2.5, dX - 2.5, dY, dX, dY + 2.5, 'F');
-
-    // === SUBTITLE ===
-    pdf.setTextColor(100, 100, 100);
-    pdf.setFontSize(13);
-    pdf.setFont('helvetica', 'italic');
-    pdf.text(t.subtitle, pageWidth / 2, titleY + 14, { align: 'center' });
-
-    // === FORMULA NAME ===
-    const formulaY = titleY + 30;
-    pdf.setFillColor(255, 245, 235);
-    pdf.setDrawColor(255, 178, 102);
-    pdf.setLineWidth(0.5);
-    pdf.roundedRect(pageWidth / 2 - 70, formulaY - 8, 140, 18, 4, 4, 'FD');
-
-    pdf.setTextColor(51, 51, 51);
-    pdf.setFontSize(20);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text(gift.formulaName, pageWidth / 2, formulaY + 4, { align: 'center' });
-
-    // === OPTIONS ===
-    if (gift.options && gift.options.length > 0) {
-        pdf.setTextColor(100, 100, 100);
-        pdf.setFontSize(10);
-        pdf.setFont('helvetica', 'normal');
-        const optionsStr = `${t.includedOptions} ${gift.options.join(', ')}`;
-        pdf.text(optionsStr, pageWidth / 2, formulaY + 16, { align: 'center' });
+    // Subtle warm gradient overlay at top
+    for (let i = 0; i < 60; i++) {
+        const alpha = 1 - (i / 60);
+        const r = Math.round(255 - alpha * 10);
+        const g = Math.round(252 - alpha * 30);
+        const b = Math.round(247 - alpha * 60);
+        pdf.setFillColor(r, g, b);
+        pdf.rect(0, i * 1, pageWidth, 1.2, 'F');
     }
 
-    // === TWO COLUMNS: LEFT (Gift fields) | RIGHT (QR + Info) ===
-    const colY = formulaY + 28;
-    const leftColX = 40;
-    const rightColX = pageWidth / 2 + 20;
+    // Subtle gradient at bottom
+    for (let i = 0; i < 40; i++) {
+        const alpha = i / 40;
+        const r = Math.round(255 - alpha * 15);
+        const g = Math.round(252 - alpha * 25);
+        const b = Math.round(247 - alpha * 40);
+        pdf.setFillColor(r, g, b);
+        pdf.rect(0, pageHeight - 40 + i, pageWidth, 1.2, 'F');
+    }
 
-    // --- LEFT COLUMN: Gift fields ---
-    pdf.setTextColor(100, 100, 100);
-    pdf.setFontSize(11);
+    // === DOUBLE DECORATIVE BORDER ===
+    // Outer golden border
+    pdf.setDrawColor(212, 160, 60);
+    pdf.setLineWidth(2.5);
+    pdf.roundedRect(6, 6, pageWidth - 12, pageHeight - 12, 4, 4);
+
+    // Inner thin border
+    pdf.setDrawColor(230, 190, 100);
+    pdf.setLineWidth(0.8);
+    pdf.roundedRect(10, 10, pageWidth - 20, pageHeight - 20, 3, 3);
+
+    // === DECORATIVE CORNER STARS ===
+    const drawStar = (cx: number, cy: number, size: number) => {
+        pdf.setFillColor(212, 160, 60);
+        // Simple diamond/star shape
+        pdf.triangle(cx, cy - size, cx + size * 0.35, cy, cx, cy + size, 'F');
+        pdf.triangle(cx, cy - size, cx - size * 0.35, cy, cx, cy + size, 'F');
+        pdf.triangle(cx - size, cy, cx, cy - size * 0.35, cx + size, cy, 'F');
+        pdf.triangle(cx - size, cy, cx, cy + size * 0.35, cx + size, cy, 'F');
+    };
+
+    drawStar(20, 20, 4);
+    drawStar(pageWidth - 20, 20, 4);
+    drawStar(20, pageHeight - 20, 4);
+    drawStar(pageWidth - 20, pageHeight - 20, 4);
+
+    // Small dots near corners
+    pdf.setFillColor(230, 190, 100);
+    const dotPositions = [
+        { x: 28, y: 16 }, { x: 16, y: 28 },
+        { x: pageWidth - 28, y: 16 }, { x: pageWidth - 16, y: 28 },
+        { x: 28, y: pageHeight - 16 }, { x: 16, y: pageHeight - 28 },
+        { x: pageWidth - 28, y: pageHeight - 16 }, { x: pageWidth - 16, y: pageHeight - 28 },
+    ];
+    dotPositions.forEach(d => pdf.circle(d.x, d.y, 1, 'F'));
+
+    // === PARAGLIDING ILLUSTRATIONS ===
+
+    // -- Mountain range silhouette (bottom area, behind content) --
+    pdf.setFillColor(240, 232, 215);
+    // Mountain 1 (left)
+    pdf.triangle(12, pageHeight - 45, 55, pageHeight - 85, 98, pageHeight - 45, 'F');
+    // Mountain 2 (center-left)
+    pdf.triangle(60, pageHeight - 45, 110, pageHeight - 95, 160, pageHeight - 45, 'F');
+    // Mountain 3 (center)
+    pdf.triangle(130, pageHeight - 45, 175, pageHeight - 80, 220, pageHeight - 45, 'F');
+    // Mountain 4 (right)
+    pdf.setFillColor(235, 225, 205);
+    pdf.triangle(190, pageHeight - 45, 230, pageHeight - 90, pageWidth - 12, pageHeight - 45, 'F');
+    // Snow caps
+    pdf.setFillColor(255, 252, 245);
+    pdf.triangle(105, pageHeight - 92, 110, pageHeight - 95, 115, pageHeight - 92, 'F');
+    pdf.triangle(170, pageHeight - 77, 175, pageHeight - 80, 180, pageHeight - 77, 'F');
+    pdf.triangle(225, pageHeight - 87, 230, pageHeight - 90, 235, pageHeight - 87, 'F');
+
+    // === TOP BANNER ===
+    // Elegant gradient-like banner
+    pdf.setFillColor(45, 45, 55);
+    pdf.roundedRect(25, 15, pageWidth - 50, 22, 3, 3, 'F');
+
+    // Gold accent line on top of banner
+    pdf.setDrawColor(212, 160, 60);
+    pdf.setLineWidth(1.5);
+    pdf.line(25, 15, pageWidth - 25, 15);
+
+    pdf.setTextColor(255, 255, 255);
+    pdf.setFontSize(14);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text('PARAPENTE ADVENTURE', pageWidth / 2, 25, { align: 'center' });
+
+    pdf.setFontSize(8);
     pdf.setFont('helvetica', 'normal');
+    pdf.setTextColor(200, 200, 210);
+    pdf.text('Orcieres Merlette  -  Champsaur  -  Hautes-Alpes', pageWidth / 2, 32, { align: 'center' });
+
+    // === MAIN TITLE ===
+    const titleY = 56;
+
+    // Decorative line above title
+    pdf.setDrawColor(212, 160, 60);
+    pdf.setLineWidth(0.8);
+    const lineW = 50;
+    pdf.line(pageWidth / 2 - lineW - 10, titleY - 14, pageWidth / 2 - 10, titleY - 14);
+    pdf.line(pageWidth / 2 + 10, titleY - 14, pageWidth / 2 + lineW + 10, titleY - 14);
+
+    // Small diamond between lines
+    drawStar(pageWidth / 2, titleY - 14, 2.5);
+
+    // BON CADEAU title
+    pdf.setTextColor(212, 160, 60);
+    pdf.setFontSize(38);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text(t.mainTitle, pageWidth / 2, titleY + 2, { align: 'center' });
+
+    // Decorative line below title
+    pdf.line(pageWidth / 2 - lineW - 10, titleY + 7, pageWidth / 2 - 10, titleY + 7);
+    pdf.line(pageWidth / 2 + 10, titleY + 7, pageWidth / 2 + lineW + 10, titleY + 7);
+    drawStar(pageWidth / 2, titleY + 7, 2.5);
+
+    // === SUBTITLE ===
+    pdf.setTextColor(120, 110, 90);
+    pdf.setFontSize(12);
+    pdf.setFont('helvetica', 'italic');
+    pdf.text(t.subtitle, pageWidth / 2, titleY + 17, { align: 'center' });
+
+    // === FORMULA CARD ===
+    const formulaY = titleY + 28;
+    // Card background
+    pdf.setFillColor(45, 45, 55);
+    pdf.roundedRect(pageWidth / 2 - 65, formulaY - 7, 130, 18, 3, 3, 'F');
+
+    // Gold accent
+    pdf.setDrawColor(212, 160, 60);
+    pdf.setLineWidth(0.8);
+    pdf.roundedRect(pageWidth / 2 - 65, formulaY - 7, 130, 18, 3, 3);
+
+    pdf.setTextColor(255, 255, 255);
+    pdf.setFontSize(18);
+    pdf.setFont('helvetica', 'bold');
+    pdf.text(gift.formulaName, pageWidth / 2, formulaY + 5, { align: 'center' });
+
+    // === OPTIONS ===
+    let currentY = formulaY + 18;
+    if (gift.options && gift.options.length > 0) {
+        pdf.setTextColor(140, 130, 110);
+        pdf.setFontSize(9);
+        pdf.setFont('helvetica', 'normal');
+        const optionsStr = `${t.includedOptions} ${gift.options.join(', ')}`;
+        pdf.text(optionsStr, pageWidth / 2, currentY, { align: 'center' });
+        currentY += 8;
+    } else {
+        currentY += 4;
+    }
+
+    // === TWO COLUMNS ===
+    const colY = currentY + 2;
+    const leftColX = 35;
+    const rightColX = pageWidth / 2 + 25;
+
+    // --- LEFT COLUMN: Form fields ---
+    pdf.setTextColor(80, 75, 65);
+    pdf.setFontSize(10);
+    pdf.setFont('helvetica', 'bold');
 
     // "Offert par" field
     pdf.text(t.offeredBy, leftColX, colY);
-    pdf.setDrawColor(200, 200, 200);
-    pdf.setLineWidth(0.5);
-    pdf.line(leftColX + 2, colY + 8, leftColX + 110, colY + 8);
+    pdf.setDrawColor(200, 190, 170);
+    pdf.setLineWidth(0.3);
+    pdf.line(leftColX + 2, colY + 8, leftColX + 120, colY + 8);
 
     // "Pour" field
-    pdf.text(t.forRecipient, leftColX, colY + 22);
-    pdf.line(leftColX + 2, colY + 30, leftColX + 110, colY + 30);
+    pdf.text(t.forRecipient, leftColX, colY + 20);
+    pdf.line(leftColX + 2, colY + 28, leftColX + 120, colY + 28);
 
     // "Message" field
-    pdf.text(t.personalMessage, leftColX, colY + 44);
-    pdf.line(leftColX + 2, colY + 52, leftColX + 110, colY + 52);
-    pdf.line(leftColX + 2, colY + 60, leftColX + 110, colY + 60);
+    pdf.text(t.personalMessage, leftColX, colY + 40);
+    pdf.line(leftColX + 2, colY + 48, leftColX + 120, colY + 48);
+    pdf.line(leftColX + 2, colY + 56, leftColX + 120, colY + 56);
 
     // --- RIGHT COLUMN: QR Code + Info ---
     // QR Code
     const qrDataUrl = await QRCode.toDataURL('https://www.jpparapente05.fr', {
         width: 300,
         margin: 2,
-        color: { dark: '#FF6600', light: '#ffffff' }
+        color: { dark: '#2D2D37', light: '#ffffff' }
     });
     const qrSize = 30;
-    pdf.addImage(qrDataUrl, 'PNG', rightColX + 20, colY - 5, qrSize, qrSize);
+    pdf.addImage(qrDataUrl, 'PNG', rightColX + 20, colY - 2, qrSize, qrSize);
 
-    pdf.setTextColor(150, 150, 150);
-    pdf.setFontSize(8);
-    pdf.text('www.jpparapente05.fr', rightColX + 20 + qrSize / 2, colY + qrSize, { align: 'center' });
+    pdf.setTextColor(160, 150, 130);
+    pdf.setFontSize(7);
+    pdf.setFont('helvetica', 'normal');
+    pdf.text('www.jpparapente05.fr', rightColX + 35, colY + 32, { align: 'center' });
 
-    // Value & Validity
-    pdf.setTextColor(51, 51, 51);
+    // Validity
+    if (gift.validUntil) {
+        pdf.setTextColor(100, 95, 80);
+        pdf.setFontSize(9);
+        pdf.setFont('helvetica', 'normal');
+        pdf.text(`${t.validUntil} : ${new Date(gift.validUntil).toLocaleDateString(locale)}`, rightColX + 35, colY + 42, { align: 'center' });
+    }
+
+    // Reference
+    if (gift.ticketId) {
+        pdf.setTextColor(160, 150, 130);
+        pdf.setFontSize(8);
+        pdf.text(`Ref : ${gift.ticketId}`, rightColX + 35, colY + 49, { align: 'center' });
+    }
+
+    // === BOTTOM BOOKING INFO ===
+    const bottomY = pageHeight - 34;
+
+    pdf.setFillColor(45, 45, 55);
+    pdf.roundedRect(25, bottomY - 5, pageWidth - 50, 18, 3, 3, 'F');
+
+    // Gold line accent
+    pdf.setDrawColor(212, 160, 60);
+    pdf.setLineWidth(0.5);
+    pdf.line(25, bottomY - 5, pageWidth - 25, bottomY - 5);
+
+    pdf.setTextColor(212, 160, 60);
     pdf.setFontSize(11);
     pdf.setFont('helvetica', 'bold');
-    pdf.text(`${t.value} : ${gift.price}€`, rightColX, colY + 40);
+    pdf.text(t.howToBook, pageWidth / 2, bottomY + 3, { align: 'center' });
 
-    if (gift.validUntil) {
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(10);
-        pdf.text(`${t.validUntil} : ${new Date(gift.validUntil).toLocaleDateString(locale)}`, rightColX, colY + 48);
-    }
-
-    if (gift.ticketId) {
-        pdf.setFont('helvetica', 'normal');
-        pdf.setFontSize(9);
-        pdf.setTextColor(150, 150, 150);
-        pdf.text(`Réf : ${gift.ticketId}`, rightColX, colY + 56);
-    }
-
-    // === BOTTOM: Instructions ===
-    const bottomY = pageHeight - 38;
-
-    pdf.setFillColor(255, 243, 205);
-    pdf.setDrawColor(255, 193, 7);
-    pdf.setLineWidth(0.5);
-    pdf.roundedRect(25, bottomY - 6, pageWidth - 50, 20, 3, 3, 'FD');
-
-    pdf.setTextColor(133, 100, 4);
-    pdf.setFontSize(10);
-    pdf.setFont('helvetica', 'bold');
-    pdf.text(`📞 ${t.howToBook}`, pageWidth / 2, bottomY + 2, { align: 'center' });
+    pdf.setTextColor(200, 200, 210);
+    pdf.setFontSize(8);
     pdf.setFont('helvetica', 'normal');
-    pdf.setFontSize(9);
     pdf.text(t.howToBookText, pageWidth / 2, bottomY + 9, { align: 'center' });
 
     // === FOOTER ===
-    pdf.setFillColor(51, 51, 51);
-    pdf.roundedRect(20, pageHeight - 16, pageWidth - 40, 10, 0, 0, 'F');
-    pdf.setTextColor(255, 255, 255);
-    pdf.setFontSize(8);
-    pdf.text('06 83 03 63 44 • jeanraza@hotmail.fr • www.jpparapente05.fr', pageWidth / 2, pageHeight - 10, { align: 'center' });
+    pdf.setTextColor(160, 150, 130);
+    pdf.setFontSize(7);
+    pdf.text('06 83 03 63 44  |  jeanraza@hotmail.fr  |  www.jpparapente05.fr', pageWidth / 2, pageHeight - 12, { align: 'center' });
 
     // === DOWNLOAD ===
     pdf.save(`bon-cadeau-parapente-${gift.ticketId || 'adventure'}.pdf`);

@@ -14,6 +14,7 @@ export interface Ticket {
     customerEmail: string;
     customerName: string;
     customerPhone?: string;
+    isGift?: boolean;
     createdAt: string;
     validUntil: string;
     status: 'active' | 'used' | 'expired';
@@ -124,7 +125,10 @@ export async function getTicket(id: string): Promise<Ticket | null> {
 
 export async function getTicketBySession(sessionId: string): Promise<Ticket | null> {
     const tickets = await readTickets();
-    return tickets.find(t => t.stripeSessionId === sessionId) || null;
+    // Exact match first, then prefix match for cart-generated tickets
+    return tickets.find(t => t.stripeSessionId === sessionId)
+        || tickets.find(t => t.stripeSessionId.startsWith(sessionId + '-'))
+        || null;
 }
 
 export async function validateTicket(id: string): Promise<{ success: boolean; message: string; ticket?: Ticket }> {

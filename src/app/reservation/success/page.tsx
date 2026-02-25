@@ -17,6 +17,7 @@ interface TicketData {
     customerName: string;
     createdAt: string;
     validUntil: string;
+    isGift?: boolean;
 }
 
 function SuccessContent() {
@@ -138,28 +139,30 @@ function SuccessContent() {
                     >
                         {isGeneratingPDF ? successT.generating : `📄 ${successT.downloadTicket}`}
                     </button>
-                    <button
-                        onClick={async () => {
-                            if (!ticket) return;
-                            setIsGeneratingGift(true);
-                            try {
-                                await generateGiftPDF({
-                                    formulaName: ticket.formula,
-                                    options: ticket.options,
-                                    price: ticket.price,
-                                    ticketId: ticket.id,
-                                    validUntil: ticket.validUntil
-                                }, language);
-                            } catch (error) {
-                                console.error('Error generating gift PDF:', error);
-                            }
-                            setIsGeneratingGift(false);
-                        }}
-                        disabled={isGeneratingGift}
-                        className={styles.giftButton}
-                    >
-                        {isGeneratingGift ? successT.generating : `🎁 ${language === 'fr' ? 'Télécharger le Bon Cadeau' : 'Download Gift Certificate'}`}
-                    </button>
+                    {ticket.isGift && (
+                        <button
+                            onClick={async () => {
+                                if (!ticket) return;
+                                setIsGeneratingGift(true);
+                                try {
+                                    await generateGiftPDF({
+                                        formulaName: ticket.formula,
+                                        options: ticket.options,
+                                        price: ticket.price,
+                                        ticketId: ticket.id,
+                                        validUntil: ticket.validUntil
+                                    }, language);
+                                } catch (error) {
+                                    console.error('Error generating gift PDF:', error);
+                                }
+                                setIsGeneratingGift(false);
+                            }}
+                            disabled={isGeneratingGift}
+                            className={styles.giftButton}
+                        >
+                            {isGeneratingGift ? successT.generating : `${language === 'fr' ? 'Telecharger le Bon Cadeau' : 'Download Gift Certificate'}`}
+                        </button>
+                    )}
                 </div>
             )}
 

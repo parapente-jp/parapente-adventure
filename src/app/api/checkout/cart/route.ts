@@ -70,7 +70,8 @@ export async function POST(request: NextRequest) {
                 items: JSON.stringify(items.map(i => ({
                     name: i.formulaName,
                     qty: i.quantity,
-                    options: i.options.map(o => o.name)
+                    options: i.options.filter(o => o.id !== 'bon-cadeau').map(o => o.name),
+                    isGift: i.options.some(o => o.id === 'bon-cadeau')
                 }))),
             },
             custom_text: {

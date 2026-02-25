@@ -47,6 +47,35 @@ export async function POST(request: NextRequest) {
         }
 
         const metadata = session.metadata;
+        console.log('Session metadata:', metadata);
+
+        // Handle cart checkout (bon_cadeau type with items array)
+        if (metadata?.type === 'bon_cadeau' && metadata?.items) {
+            try {
+                const cartItems = JSON.parse(metadata.items);
+                const allTickets = [];
+                for (const cartItem of cartItems) {
+                    for (let i = 0; i < (cartItem.qty || 1); i++) {
+                        const ticket = await createTicket({
+                            stripeSessionId: `${stripeSessionId}-${cartItem.name}-${i}`,
+                            formula: cartItem.name,
+                            options: cartItem.options || [],
+                            price: session.amount_total ? session.amount_total / 100 / cartItems.reduce((s: number, it: any) => s + (it.qty || 1), 0) : 0,
+                            customerEmail: session.customer_details?.email || '',
+                            customerName: session.customer_details?.name || 'Client',
+                            isGift: cartItem.isGift === true
+                        });
+                        allTickets.push(ticket);
+                    }
+                }
+                console.log(`Created ${allTickets.length} tickets from cart`);
+                return NextResponse.json({ ticket: allTickets[0], tickets: allTickets });
+            } catch (parseError) {
+                console.error('Error parsing cart items:', parseError);
+            }
+        }
+
+        // Handle single item checkout
         console.log('Creating ticket for customer:', metadata?.customerName);
         const ticket = await createTicket({
             stripeSessionId,
@@ -54,7 +83,7 @@ export async function POST(request: NextRequest) {
             options: metadata?.options ? metadata.options.split(',') : [],
             price: session.amount_total ? session.amount_total / 100 : 0,
             customerEmail: session.customer_details?.email || '',
-            customerName: metadata?.customerName || 'Client',
+            customerName: metadata?.customerName || session.customer_details?.name || 'Client',
             customerPhone: metadata?.customerPhone
         });
 
