@@ -146,5 +146,18 @@
     "createdAt": "2026-06-26T16:25:22.235Z",
     "validUntil": "2027-06-26T16:25:22.235Z",
     "status": "active"
+  },
+  {
+    "id": "TKT-F6BD1FED",
+    "stripeSessionId": "cs_live_a1mlocEVs5Y0RUt1LuwDiqBS9eK70lJDXEYZDylkHCnSQ9qrsX8dPje8U7-Balade Aérienne-0",
+    "formula": "Balade Aérienne",
+    "options": [],
+    "price": 160,
+    "customerEmail": "christophe.therville@gmail.com",
+    "customerName": "THERVILLE",
+    "isGift": false,
+    "createdAt": "2026-07-11T09:30:23.519Z",
+    "validUntil": "2027-07-11T09:30:23.519Z",
+    "status": "active"
   }
 ]
