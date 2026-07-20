@@ -159,5 +159,18 @@
     "createdAt": "2026-07-11T09:30:23.519Z",
     "validUntil": "2027-07-11T09:30:23.519Z",
     "status": "active"
+  },
+  {
+    "id": "TKT-0984CE55",
+    "stripeSessionId": "cs_live_a1LvjfX3LORT7kFz9pVv1FGTRSrguBloMV0N7jk4fWBX9dnoDTWqqzdEfS-Découverte-0",
+    "formula": "Découverte",
+    "options": [],
+    "price": 95,
+    "customerEmail": "nathalie.simecek@laposte.net",
+    "customerName": "Nathalie SIMECEK",
+    "isGift": true,
+    "createdAt": "2026-07-20T13:34:33.108Z",
+    "validUntil": "2027-07-20T13:34:33.108Z",
+    "status": "active"
   }
 ]
