@@ -132,6 +132,15 @@ export default function Footer() {
                                 <Link href="/politique-de-confidentialite" className={styles.legalLink}>
                                     {t.footer.legal.privacy}
                                 </Link>
+                                <a 
+                                    href="https://www.adrenactive.com/?srsltid=AfmBOor7XgtjKwLeWk36kwGbOr3XZcZ-QPV6vflWQOFYSWGk5Nq2xhme" 
+                                    target="_blank" 
+                                    rel="noopener noreferrer" 
+                                    className={styles.legalLink}
+                                    title="Adrenactive - Baptêmes de Parapente & Activités Outdoor"
+                                >
+                                    {t.footer.partner}
+                                </a>
                             </div>
                         </div>
                     </div>

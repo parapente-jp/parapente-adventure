@@ -172,6 +172,7 @@ export const translations = {
                 cookies: "Cookies",
                 privacy: "Confidentialité"
             },
+            partner: "Partenaire : Adrenactive",
             rights: "Tous droits réservés."
         },
         testimonials: {
@@ -548,6 +549,7 @@ export const translations = {
                 cookies: "Cookies",
                 privacy: "Privacy Policy"
             },
+            partner: "Partner: Adrenactive",
             rights: "All rights reserved."
         },
         testimonials: {
