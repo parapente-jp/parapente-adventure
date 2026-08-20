@@ -172,5 +172,18 @@
     "createdAt": "2026-07-20T13:34:33.108Z",
     "validUntil": "2027-07-20T13:34:33.108Z",
     "status": "active"
+  },
+  {
+    "id": "TKT-C2BC8343",
+    "stripeSessionId": "cs_live_b1DZnQ6uBaytAljMp51jf6x5uIHF8sMdPZL9lkgA8qIYPWFZIilEdbnotk-Ascendances-0",
+    "formula": "Ascendances",
+    "options": [],
+    "price": 130,
+    "customerEmail": "fab.borel05@gmail.com",
+    "customerName": "FABRICE BOREL",
+    "isGift": false,
+    "createdAt": "2026-08-20T18:16:08.282Z",
+    "validUntil": "2027-08-20T18:16:08.282Z",
+    "status": "active"
   }
 ]
